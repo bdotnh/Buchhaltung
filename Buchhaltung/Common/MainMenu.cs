@@ -1,5 +1,6 @@
 using System;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 
 namespace Buchhaltung.Common
 {
@@ -16,7 +17,6 @@ namespace Buchhaltung.Common
         public MainMenu()
         {
             Menu.ShowPrompts(promptMainMenu);
-
             int menuChoice = User.GetMenuChoice();
             if (menuChoice == 0)
             {
@@ -40,13 +40,12 @@ namespace Buchhaltung.Common
                     string geschäft = "Aldi";
                     bool istAusgabe = true;
                     bool istFix = false;
-                    
+
                     Entry testEntry = new Entry(
                         datum, betrag, geschäft, istAusgabe, istFix
                     );
-                    
-                    string filename = $"{Common.GetCurrentMonth()}_data.json";
-                    Entry.Save(filename, testEntry);
+
+                    Entry.Save(Common.currMonthFilepath, testEntry);
                 }
                 else if (menuChoice == 2)
                 {

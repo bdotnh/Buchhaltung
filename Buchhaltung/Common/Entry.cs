@@ -1,8 +1,7 @@
-using System.Runtime.InteropServices;
+using System;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
-using Utf8Json.Formatters;
 
 namespace Buchhaltung.Common
 {
@@ -210,6 +209,11 @@ namespace Buchhaltung.Common
                 entryList.Add(entry);
                 string jsonData = JsonSerializer.Serialize(entryList, options);
                 File.WriteAllText(filePath, jsonData, new UTF8Encoding()); 
+            }
+            
+            if (entry.IstFix)
+            {
+                FixCost.Save(entry);
             }
         }
     }

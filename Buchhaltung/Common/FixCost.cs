@@ -1,13 +1,16 @@
 using System;
-using System.ComponentModel;
-using System.IO.Enumeration;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+
+
 
 namespace Buchhaltung.Common
 {
     public class FixCost
     {
-        private static string filePath = "/home/ben/cs_workspace/Buchhaltung/Src/FixCost_data.json";
-        public static string filename = filePath.Substring(filePath.LastIndexOf("/"));
+        private static string filePath = Common.fixCostFilepath;
+        private static string filename = filePath.Substring(filePath.LastIndexOf("/"));
 
         public FixCost()
         {
@@ -23,13 +26,30 @@ namespace Buchhaltung.Common
             }
         }
 
-        public static void Save(Entry fixCostEntry)
+        public static void Save(Entry entry)
         {
-            if (File.Exists(filename))
+            var options = new JsonSerializerOptions
             {
-                Entry.Save(filename, fixCostEntry);
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            };
+
+            if (File.Exists(filePath) && File.ReadAllLines(filePath).Length > 1)
+            {
+                var jsonData = File.ReadAllText(filePath);
+                var entryList = JsonSerializer.Deserialize<List<Entry>>(jsonData)
+                                ?? new List<Entry>();
+                entryList.Add(entry);
+                jsonData = JsonSerializer.Serialize(entryList, options);
+                File.WriteAllText(filePath, jsonData, new UTF8Encoding());
             }
-            Console.WriteLine("Eintrag wurde erfolgreich zu Fix-Kosten hinzugefügt.");
+            else
+            {
+                var entryList = new List<Entry>();
+                entryList.Add(entry);
+                string jsonData = JsonSerializer.Serialize(entryList, options);
+                File.WriteAllText(filePath, jsonData, new UTF8Encoding()); 
+            }
         }
     }
 }

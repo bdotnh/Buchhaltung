@@ -1,10 +1,15 @@
 using System;
+using System.Dynamic;
 using System.Text.Json;
 
 namespace Buchhaltung.Common
 {
     public class Common
     {
+        public static string currDir = Directory.GetCurrentDirectory() + "/Src/";
+        public static string fileFormat = "_data.json"; 
+        public static string currMonthFilepath = currDir + GetCurrentMonth() + fileFormat; 
+        public static string fixCostFilepath = currDir + "FixCosts" + fileFormat;
         public static List<string> GetFilenamesInDir(string dirPath)
         {
             List<string> allFilenames = new List<string>();

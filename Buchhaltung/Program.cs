@@ -10,35 +10,24 @@ namespace Buchhaltung
         {
             Console.WriteLine("Initialisierung...");
 
-            if (!IsDirectoryExisting())
-            {
-                Directory.CreateDirectory(Directory.GetCurrentDirectory() + "/Src");
-            }
             string currDir = Directory.GetCurrentDirectory() + "/Src/";
             
-            string currentMonthFn = currDir + Common.Common.GetCurrentMonth() + "_data.json";
-            if (!File.Exists(currentMonthFn))
+            if (!Directory.Exists(Directory.GetCurrentDirectory() + "/Src"))
             {
-                File.WriteAllText(currentMonthFn, "", new UTF8Encoding()); 
+                Directory.CreateDirectory(currDir);
+            }
+            
+            if (!File.Exists(Common.Common.currMonthFilepath))
+            {
+                File.WriteAllText(Common.Common.currMonthFilepath, "", new UTF8Encoding()); 
             }
 
-            string fixCostFn = currDir + "FixCost_data.json";
-            if (!File.Exists(fixCostFn))
+            if (!File.Exists(Common.Common.fixCostFilepath))
             {
-                File.WriteAllText(fixCostFn, "", new UTF8Encoding());
+                File.WriteAllText(Common.Common.fixCostFilepath, "", new UTF8Encoding());
             }
 
             Console.WriteLine("Initialisierung erfolgreich abgeschlossen.");
-        }
-
-        private static bool IsDirectoryExisting()
-        {
-            if (Directory.Exists(Directory.GetCurrentDirectory() + "/Src"))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         public static int Main()

@@ -4,13 +4,6 @@
     "Betrag": 12.34,
     "Geschäft": "Aldi",
     "IstAusgabe": true,
-    "IstFix": false
-  },
-  {
-    "Datum": "30.11.2025",
-    "Betrag": 12.34,
-    "Geschäft": "Aldi",
-    "IstAusgabe": true,
     "IstFix": true
   }
 ]
