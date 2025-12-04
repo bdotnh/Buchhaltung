@@ -1,5 +1,6 @@
 ﻿using Buchhaltung.Common;
 using System.IO;
+using System.Text;
 
 namespace Buchhaltung
 {
@@ -8,9 +9,23 @@ namespace Buchhaltung
         public static void Init()
         {
             Console.WriteLine("Initialisierung...");
+
             if (!IsDirectoryExisting())
             {
                 Directory.CreateDirectory(Directory.GetCurrentDirectory() + "/Src");
+            }
+            string currDir = Directory.GetCurrentDirectory() + "/Src/";
+            
+            string currentMonthFn = currDir + Common.Common.GetCurrentMonth() + "_data.json";
+            if (!File.Exists(currentMonthFn))
+            {
+                File.WriteAllText(currentMonthFn, "", new UTF8Encoding()); 
+            }
+
+            string fixCostFn = currDir + "FixCost_data.json";
+            if (!File.Exists(fixCostFn))
+            {
+                File.WriteAllText(fixCostFn, "", new UTF8Encoding());
             }
 
             Console.WriteLine("Initialisierung erfolgreich abgeschlossen.");
@@ -30,6 +45,7 @@ namespace Buchhaltung
         {
             Init();
             _ = new MainMenu();
+
             return 0;
         }
     }

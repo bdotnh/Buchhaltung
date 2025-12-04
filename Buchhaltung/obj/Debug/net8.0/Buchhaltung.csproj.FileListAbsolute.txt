@@ -12,3 +12,7 @@
 /home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/Buchhaltung.pdb
 /home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/Buchhaltung.genruntimeconfig.cache
 /home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/ref/Buchhaltung.dll
+/home/ben/cs_workspace/Buchhaltung/Buchhaltung/bin/Debug/net8.0/Utf8Json.dll
+/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/Buchhaltung.csproj.AssemblyReference.cache
+/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/Buchhaltung.csproj.CopyComplete
+/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/Buchhaltung.sourcelink.json

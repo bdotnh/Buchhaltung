@@ -1,9 +1,8 @@
-using System;
-using System.Buffers.Text;
-using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Text.Unicode;
+using Utf8Json.Formatters;
 
 namespace Buchhaltung.Common
 {
@@ -11,7 +10,7 @@ namespace Buchhaltung.Common
     {
         public static string GetDatumInput()
         {
-            string userInput = "";
+            string? userInput = "";
             bool isVaild = false;
             while (!isVaild)
             {
@@ -19,21 +18,20 @@ namespace Buchhaltung.Common
                 userInput = Console.ReadLine();
                 if (!String.IsNullOrEmpty(userInput))
                 {
-                    userInput.Replace(",", ".");
+                    _ = userInput.Replace(",", ".");
                     if (userInput.IndexOf('.') == 1)
                     {
-                        userInput.Insert(0, "0");
+                        _ = userInput.Insert(0, "0");
                     }
 
                     if (userInput.LastIndexOf('.') == 4)
                     {
-                        userInput.Insert(3, "0");
+                        _ = userInput.Insert(3, "0");
                     }
 
                     if (userInput.Length == 10 && userInput.Count(f => f == '.') == 2)
                     {
                         isVaild = true;
-                        break;
                     }
                 }
             }
@@ -43,20 +41,19 @@ namespace Buchhaltung.Common
 
         public static float GetBetragInput()
         {
-            string betragInput = "";
+            string? betragInput;
             float betragValue = -1.0f;
             bool isVaild = false;
             while (!isVaild)
             {
                 Console.Write("Betrag: ");
                 betragInput = Console.ReadLine();
-                betragInput.Replace(',', '.');
+                _ = betragInput.Replace(',', '.');
                 if (float.TryParse(betragInput, out betragValue))
                 {
                     if (betragValue > 0.0f)
                     {
                         isVaild = true;
-                        break;
                     }
                 }
             }
@@ -121,13 +118,11 @@ namespace Buchhaltung.Common
                 {
                     istFix = true;
                     isValid = true;
-                    break;
                 }
                 else if (userInput == "N" || userInput == "n")
                 {
                     istFix = false;
                     isValid = true;
-                    break;
                 }
             }
 
@@ -141,30 +136,81 @@ namespace Buchhaltung.Common
         public bool IstAusgabe { get; set; }
         public bool IstFix { get; set; }
 
-        public Entry()
+        public Entry(string datum, float betrag, string geschäft,
+                        bool istAusgabe, bool istFix)
         {
+            this.Datum = datum; 
+            this.Betrag = betrag;
+            this.Geschäft = geschäft; 
+            this.IstAusgabe = istAusgabe;
+            this.IstFix = istFix;
         }
 
-        public static void Save()
+        public static Dictionary<string, object> GetInputs()
         {
-            Entry entry = new Entry();
-            /* For real input
-            entry.Datum = GetDatumInput();
-            entry.Betrag = GetBetragInput();
-            entry.Geschäft = GetGeschäftInput();
-            entry.IstAusgabe = GetIstAusgabeInput();
-            entry.IstFix = GetIstFixInput();
-            */
-            entry.Datum = "30.11.2025";
-            entry.Betrag = 12.34f; 
-            entry.Geschäft = "Aldi";
-            entry.IstAusgabe = true;
-            entry.IstFix = false; 
+            Dictionary<string, object> Inputs = new Dictionary<string, object>
+            {
+                { "Datum", "" }, 
+                { "Betrag", 0.0f }, 
+                { "Geschäft", "" },
+                { "IstAusgabe", true },
+                { "IstFix", false } 
+            };
 
-            string filename = $"{Common.GetCurrentMonth()}_data.json";
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            string jsonString = JsonSerializer.Serialize(entry, options);
-            File.WriteAllText(filename, jsonString, Encoding.UTF8);
+            string datum = GetDatumInput();
+            if (!Inputs.TryAdd("Datum", datum))
+            {
+                Console.WriteLine($"Fehler beim speichern des Datums: {datum}!");
+            }
+            float betrag = GetBetragInput();
+            if (!Inputs.TryAdd("Betrag", betrag))
+            {
+                Console.WriteLine($"Fehler beim speichern des Betrags: {betrag}!");
+            }
+            string geschäft = GetGeschäftInput();
+            if (!Inputs.TryAdd("Geschäft", geschäft))
+            {
+                Console.WriteLine($"Fehler beim speichern des Datums: {geschäft}!");
+            }
+            bool istAusgabe = GetIstAusgabeInput();
+            if (!Inputs.TryAdd("IstAusgabe", istAusgabe))
+            {
+                Console.WriteLine($"Fehler beim speichern des Datums: {istAusgabe}!");
+            } 
+            bool istFix = GetIstFixInput();
+            if (!Inputs.TryAdd("IstFix", istFix))
+            {
+                Console.WriteLine($"Fehler beim speichern des Datums: {istFix}!");
+            }
+
+            return Inputs;
+        }
+
+        public static void Save(string filePath, Entry entry)
+        {
+            
+            var options = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            };
+
+            if (File.Exists(filePath) && File.ReadAllLines(filePath).Length > 1)
+            {
+                var jsonData = File.ReadAllText(filePath);
+                var entryList = JsonSerializer.Deserialize<List<Entry>>(jsonData)
+                                ?? new List<Entry>();
+                entryList.Add(entry);
+                jsonData = JsonSerializer.Serialize(entryList, options);
+                File.WriteAllText(filePath, jsonData, new UTF8Encoding());
+            }
+            else
+            {
+                var entryList = new List<Entry>();
+                entryList.Add(entry);
+                string jsonData = JsonSerializer.Serialize(entryList, options);
+                File.WriteAllText(filePath, jsonData, new UTF8Encoding()); 
+            }
         }
     }
 }
