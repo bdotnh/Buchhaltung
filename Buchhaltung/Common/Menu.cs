@@ -1,6 +1,4 @@
 using System;
-using System.Globalization;
-using System.Linq.Expressions;
 
 namespace Buchhaltung.Common
 {
@@ -29,31 +27,37 @@ namespace Buchhaltung.Common
         public Menu(int menu)
         {
             InitMenu(menu);
-            if (menu == 2)
+            if (menu == (int)EMenu.Month)
             {
                 MonthMenu();
             }
-            if (menu == 3)
+            if (menu == (int)EMenu.FixCosts)
             {
                 FixCostMenu();
             }
         }
 
+        public enum EMonthMenu
+        {
+            Exit = 0, ChangeMonth, DeleteEntry
+        }
+
         private static void MonthMenu()
         {
-            int menuChoice = GetMenuChoice();
-            if (menuChoice == 0)
+            string message = "Eingabe: ";
+            int menuChoice = User.GetInputNumber(message);
+            if (menuChoice == (int)EMonthMenu.Exit)
             {
-                Environment.Exit(0);
+                _ = new MainMenu();
             }
             else
             {
-                if (menuChoice == 1)    // Monat auswahl
+                if (menuChoice == (int)EMonthMenu.ChangeMonth)    
                 {
                     Month.ChangeDisplayedMonth();
                     Month.Show();
                 }
-                else if (menuChoice == 2)   // Eintrag löschen
+                else if (menuChoice == (int)EMonthMenu.DeleteEntry)   
                 {
                     Month.Show();
                     int entryChoice = GetEntryChoice();
@@ -62,16 +66,23 @@ namespace Buchhaltung.Common
                 }
             }
         }
+
+        public enum EFixMenu
+        {
+            Exit = 0, DeleteEntry
+        }
+
         private static void FixCostMenu()
         {
-            int menuChoice = GetMenuChoice();
-            if (menuChoice == 0)
+            string message = "Eingabe: ";
+            int menuChoice = User.GetInputNumber(message);
+            if (menuChoice == (int)EFixMenu.Exit)
             {
-                Environment.Exit(0);
+                 _ = new MainMenu();
             }
             else
             {
-                if (menuChoice == 1) // Fixkosten-Eintrag löschen
+                if (menuChoice == (int)EFixMenu.DeleteEntry)
                 {
                     int fixCostChoice = GetFixCostChoice();
                     Entry entry = FixCost.SelectEntry(fixCostChoice);
@@ -87,23 +98,8 @@ namespace Buchhaltung.Common
                 Console.WriteLine($"Keine Einträge im Monat: {Month.monthDate} vorhanden.");
                 return -1;
             }
-            int userChoice = -1;
-            string userInput = "";
-            bool isValid = false;
-            while (!isValid)
-            {
-                Console.WriteLine("Zum löschen eines Eintrags bitte Nummer eingeben: ");
-                userInput = Console.ReadLine();
-                if (int.TryParse(userInput, out int temp) && temp < Month.entriesCount && temp >= 0)
-                {
-                    userChoice = temp;
-                    isValid = true;
-                }
-            }
-            if (userChoice < 0)
-            {
-                Console.WriteLine($"Error: Keine gültige Auswahl getroffen. Auswahl: {userChoice}!");
-            }
+            string message = "Zum löschen eines Eintrags bitte Nummer eingeben: ";
+            int userChoice = User.GetInputNumber(message);
 
             return userChoice;
         }
@@ -115,68 +111,32 @@ namespace Buchhaltung.Common
                 Console.WriteLine("Error: Es sind noch keine FixKosten-Einträge vorhanden!");
                 return -1;
             }
-            int userChoice = -1;
-            string userInput = "";
-            bool isValid = false;
-            while (!isValid)
-            {
-                Console.WriteLine("Zum löschen des Fixkosten-Eintrages, bitte Nummer eingeben: ");
-                userInput = Console.ReadLine();
-                if (int.TryParse(userInput, out int temp) && temp < FixCost.fixCount && temp >= 0)
-                {
-                    userChoice = temp;
-                    isValid = true;
-                }
-            }
-            if (userChoice < 0)
-            {
-                Console.WriteLine($"Error: Keine gültige Auswahl getroffen. Auswahl: {userChoice}!");
-            }
+            string message = "Zum löschen des Fixkosten-Eintrages, bitte Nummer eingeben: ";
+            int userChoice = User.GetInputNumber(message);
 
             return userChoice;
         }
 
-        private static int GetMenuChoice()
-        {
-            int menuChioce = -1;
-            string userInput = "";
-            while (string.IsNullOrEmpty(userInput))
-            {
-                userInput = Console.ReadLine();
-                if (int.TryParse(userInput, out int temp))
-                {
-                    menuChioce = temp;
-                }
-            }
-            if (menuChioce < 0)
-            {
-                Console.WriteLine("Ups! Bei der Menü-Auswahl ist etwas schiefgelaufen. Versuch es doch diesmal mit einem existierenden Menüpunkt.");
-            }
-
-            return menuChioce;
-        }
-
         public static void ShowPrompts(string[] menuPrompts)
         {
-            Console.WriteLine("-- Menu --");
+            Console.WriteLine("-- HauptMenü --");
             for (int i = 0; i < menuPrompts.Length; i++)
             {
                 Console.WriteLine($"{i}. {menuPrompts[i]}.");
             }
-            Console.WriteLine("Eingabe: ");
         }
 
         private void InitMenu(int menu)
         {
-            if (menu == 1)
+            if (menu == (int)EMenu.NewEntry)
             {
                 ShowPrompts(promptEntryMenu);
             }
-            else if (menu == 2)
+            else if (menu == (int)EMenu.Month)
             {
                 ShowPrompts(promptMonthMenu);
             }
-            else if (menu == 3)
+            else if (menu == (int)EMenu.FixCosts)
             {
                 ShowPrompts(promptFixMenu);
             }

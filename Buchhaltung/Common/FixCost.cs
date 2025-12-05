@@ -20,7 +20,6 @@ namespace Buchhaltung.Common
             WriteIndented = true
         };
         private static string filepath = Common.fixCostFilepath;
-        private static string filename = filepath.Substring(filepath.LastIndexOf("/"));
         private static List<Entry> entries = new List<Entry>();
 
         public FixCost()
@@ -76,8 +75,10 @@ namespace Buchhaltung.Common
             }
             else
             {
-                var entryList = new List<Entry>();
-                entryList.Add(entry);
+                var entryList = new List<Entry>
+                {
+                    entry
+                };
                 string jsonData = JsonSerializer.Serialize(entryList, options);
                 File.WriteAllText(filepath, jsonData, new UTF8Encoding());
             }

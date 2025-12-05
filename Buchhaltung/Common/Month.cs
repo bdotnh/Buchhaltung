@@ -8,12 +8,6 @@ namespace Buchhaltung.Common
 {
     public class Month
     {
-        private string[] promptMonthMenu =
-        [
-            "Exit",
-            "Monat ändern"
-        ];
-
         public static string monthDate = "";
         public static float entriesCount = 0.0f;
         public static float moneyEarned = 0.0f;
@@ -38,7 +32,7 @@ namespace Buchhaltung.Common
             CalculateMonth();
             Show();
             entriesCount = entries.Count;
-            Menu menu = new Menu(2);
+            _ = new Menu(2);
         }
 
         public static void DeleteEntry(Entry entry)
@@ -56,7 +50,6 @@ namespace Buchhaltung.Common
 
         public static Entry SelectEntry(int number)
         {
-            Console.WriteLine($"Ausgewählte Nummer: {number}.");
             Entry selectedEntry = entries[number];
 
             return selectedEntry;
@@ -76,47 +69,7 @@ namespace Buchhaltung.Common
 
         public static void ChangeDisplayedMonth()
         {
-            string monthDate = GetMonthUserInput();
-            Month.monthDate = monthDate;
-        }
-
-        public static string GetMonthUserInput()
-        {
-            string[] allFilesInSrcPath = Directory.GetFiles(Common.currDir);
-            List<string> allMonthFilepaths = new List<string>();
-            List<string> allSavedMonths = new List<string>();
-            foreach (string filepath in allFilesInSrcPath)
-            {
-                allMonthFilepaths.Add(filepath);
-                string month = filepath.Substring(filepath.LastIndexOf('/') + 1);
-                month = month.Substring(0, month.LastIndexOf('_'));
-                allSavedMonths.Add(month);
-            }
-
-            string userInput = "";
-            bool isValid = false;
-            while (!isValid)
-            {
-                Console.WriteLine("Alle gespeicherten Monate: ");
-                foreach (string month in allSavedMonths)
-                {
-                    Console.WriteLine($"Monat: {month}.");
-                }
-
-                Console.WriteLine("Monat: ");
-                userInput = Console.ReadLine();
-                if (allSavedMonths.Contains(userInput))
-                {
-                    isValid = true;
-                }
-                else
-                {
-                    Console.WriteLine($"Der ausgeählte Monat: {userInput} ist leider nicht verfügbar!");
-                }
-            }
-            monthDate = userInput;
-
-            return userInput;
+            monthDate = User.GetMonthInput();
         }
 
         private static void InitMonth()
