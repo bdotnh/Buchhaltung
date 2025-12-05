@@ -1,2 +1,1 @@
-# Accounting-Software
-# Console app. Written in C#
+# Buchhaltungs-Software, Consolen App in C# geschrieben
