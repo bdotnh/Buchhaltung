@@ -11,6 +11,9 @@ namespace Buchhaltung.Common
     public class FixCost
     {
         public static int fixCount = 0;
+        private static float fixMoneySpend = 0.0f;
+        private static float fixMoneyEarned = 0.0f;
+        private static float moneyLeft = 0.0f;
         private static JsonSerializerOptions options = new JsonSerializerOptions
         {
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
@@ -33,7 +36,8 @@ namespace Buchhaltung.Common
             if (SaveAllEntries() == 0)
             {
                 Console.WriteLine("Fixkosten-Eintrag wurde erfolgreich gelöscht.");
-            } else
+            }
+            else
             {
                 Console.WriteLine("Error: Fehler beim löschen des Fixkosten-Eintrags!");
             }
@@ -78,7 +82,7 @@ namespace Buchhaltung.Common
                 File.WriteAllText(filepath, jsonData, new UTF8Encoding());
             }
         }
-        
+
         public static void Show()
         {
             fixCount = entries.Count;
@@ -86,6 +90,33 @@ namespace Buchhaltung.Common
             for (int i = 0; i < fixCount; i++)
             {
                 Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}    |    {entries[i].Geschäft}   |   {entries[i].IstAusgabe}     |   {entries[i].IstFix}");
+            }
+            if (moneyLeft > 0.0f)
+            {
+                Console.WriteLine($"Überblick der Fixkosten:\nGesamt-Einkommen: {fixMoneyEarned} €,      Ausgaben: {fixMoneySpend} €,   Einkommen abzüglich Fixkosten: {moneyLeft} € .");
+            }
+            else
+            {
+                Console.WriteLine($"Feste monatliche Ausgaben: {fixMoneySpend} €.");
+            }
+        }
+
+        private static void CalculateFixCosts()
+        {
+            for (int i = 0; i < entries.Count; i++)
+            {
+                if (entries[i].IstAusgabe)
+                {
+                    fixMoneySpend += entries[i].Betrag;
+                }
+                else
+                {
+                    fixMoneyEarned += entries[i].Betrag;
+                }
+                if (fixMoneyEarned > 0.0f)
+                {
+                    moneyLeft = fixMoneyEarned - fixMoneySpend;
+                }
             }
         }
 
@@ -96,8 +127,7 @@ namespace Buchhaltung.Common
             {
                 Console.WriteLine("Error: Es wurden keine gespeicherten Fixkosten gefunden!");
             }
+            CalculateFixCosts();
         }
-
-
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Data;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -14,8 +13,13 @@ namespace Buchhaltung.Common
             "Exit",
             "Monat ändern"
         ];
+
         public static string monthDate = "";
-        public static int entriesCount = 0;
+        public static float entriesCount = 0.0f;
+        public static float moneyEarned = 0.0f;
+        public static float moneySpend = 0.0f;
+        public static float moneyLeft = 0.0f;
+
         private static string filepath = "";
         private static List<Entry> entries = new List<Entry>();
         private static JsonSerializerOptions options = new JsonSerializerOptions
@@ -26,8 +30,13 @@ namespace Buchhaltung.Common
 
         public Month()
         {
-            Show();
+            if (monthDate == "")
+            {
+                monthDate = Common.GetCurrentMonth();
+            }
             LoadEntries();
+            CalculateMonth();
+            Show();
             entriesCount = entries.Count;
             Menu menu = new Menu(2);
         }
@@ -99,7 +108,7 @@ namespace Buchhaltung.Common
                 if (allSavedMonths.Contains(userInput))
                 {
                     isValid = true;
-                } 
+                }
                 else
                 {
                     Console.WriteLine($"Der ausgeählte Monat: {userInput} ist leider nicht verfügbar!");
@@ -110,28 +119,53 @@ namespace Buchhaltung.Common
             return userInput;
         }
 
-        public static void Show()
+        private static void InitMonth()
         {
-            if (monthDate == "")
+            if (string.IsNullOrEmpty(monthDate))
             {
                 monthDate = Common.GetCurrentMonth();
-            }
+            } 
             filepath = Directory.GetCurrentDirectory() + "/Src/" + monthDate + "_data.json";
+        }
+
+        public static void Show()
+        {
+            InitMonth();
             List<Entry> entries = Common.GetEntries(filepath);
             Console.WriteLine(" ID   |     Datum     |   Betrag  |    Geschäft    | IstAusgabe | IstFix |");
             for (int i = 0; i < entries.Count; i++)
             {
                 Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}    |    {entries[i].Geschäft}   |   {entries[i].IstAusgabe}     |   {entries[i].IstFix}");
             }
+            Console.WriteLine($"Monatsübersicht:\nEinnahmen: {moneyEarned} €,     Ausgaben: {moneySpend} €,     Übrig: {moneyLeft} €.");
+        }
+
+        private static void CalculateMonth()
+        {
+            InitMonth();
+            for (int i = 0; i < entries.Count; i++)
+            {
+                if (entries[i].IstAusgabe)
+                {
+                    moneySpend += entries[i].Betrag;
+                }
+                else
+                {
+                    moneyEarned += entries[i].Betrag;
+                }
+            }
+            moneyLeft = moneyEarned - moneySpend;
         }
 
         private static void LoadEntries()
         {
+            InitMonth();
             entries = Common.GetEntries(filepath);
             if (entries.Count < 1)
             {
-                Console.WriteLine("Error: Es wurden keine gespeicherten Fixkosten gefunden!");
+                Console.WriteLine("Error: Es wurden keine gespeicherten Einträge gefunden!");
             }
+
         }
     }
 }

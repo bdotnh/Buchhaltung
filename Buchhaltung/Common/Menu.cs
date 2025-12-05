@@ -52,7 +52,7 @@ namespace Buchhaltung.Common
                 {
                     Month.ChangeDisplayedMonth();
                     Month.Show();
-                } 
+                }
                 else if (menuChoice == 2)   // Eintrag löschen
                 {
                     Month.Show();
@@ -75,7 +75,7 @@ namespace Buchhaltung.Common
                 {
                     int fixCostChoice = GetFixCostChoice();
                     Entry entry = FixCost.SelectEntry(fixCostChoice);
-                    FixCost.DeleteEntry(entry); 
+                    FixCost.DeleteEntry(entry);
                 }
             }
         }
@@ -97,7 +97,7 @@ namespace Buchhaltung.Common
                 if (int.TryParse(userInput, out int temp) && temp < Month.entriesCount && temp >= 0)
                 {
                     userChoice = temp;
-                    isValid = true; 
+                    isValid = true;
                 }
             }
             if (userChoice < 0)
@@ -107,14 +107,14 @@ namespace Buchhaltung.Common
 
             return userChoice;
         }
-    
+
         private static int GetFixCostChoice()
         {
             if (FixCost.fixCount < 1)
             {
                 Console.WriteLine("Error: Es sind noch keine FixKosten-Einträge vorhanden!");
                 return -1;
-            } 
+            }
             int userChoice = -1;
             string userInput = "";
             bool isValid = false;
@@ -124,8 +124,8 @@ namespace Buchhaltung.Common
                 userInput = Console.ReadLine();
                 if (int.TryParse(userInput, out int temp) && temp < FixCost.fixCount && temp >= 0)
                 {
-                   userChoice = temp; 
-                   isValid = true;
+                    userChoice = temp;
+                    isValid = true;
                 }
             }
             if (userChoice < 0)
@@ -133,8 +133,8 @@ namespace Buchhaltung.Common
                 Console.WriteLine($"Error: Keine gültige Auswahl getroffen. Auswahl: {userChoice}!");
             }
 
-            return userChoice; 
-        } 
+            return userChoice;
+        }
 
         private static int GetMenuChoice()
         {
