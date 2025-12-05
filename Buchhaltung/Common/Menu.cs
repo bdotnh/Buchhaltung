@@ -1,4 +1,6 @@
 using System;
+using System.Globalization;
+using System.Linq.Expressions;
 
 namespace Buchhaltung.Common
 {
@@ -14,13 +16,14 @@ namespace Buchhaltung.Common
         private string[] promptMonthMenu =
         [
             "Exit",
-            "Monat ändern"
+            "Monat ändern",
+            "Eintrag löschen"
         ];
 
         private string[] promptFixMenu =
         [
             "Exit",
-            "Fix Kosten anpassen"
+            "Fixkosten-Eintrag löschen"
         ];
 
         public Menu(int menu)
@@ -30,36 +33,11 @@ namespace Buchhaltung.Common
             {
                 MonthMenu();
             }
-
-        }
-
-        private static void FixMenu()
-        {
-            int menuChoice = GetMenuChoice();
-            if (menuChoice == 0)
+            if (menu == 3)
             {
-                Environment.Exit(0);
-            }
-            else
-            {
-                if (menuChoice == 1)
-                {
-                    GetFixCostChoice();
-                }
+                FixCostMenu();
             }
         }
-
-        private static int GetFixCostChoice()
-        {
-            int userChoice = -1;
-
-            if (userChoice < 0)
-            {
-                Console.WriteLine($"Error: Keine gültige Auswahl getroffen. Auswahl: {userChoice}!");
-            }
-
-            return userChoice; 
-        } 
 
         private static void MonthMenu()
         {
@@ -70,19 +48,93 @@ namespace Buchhaltung.Common
             }
             else
             {
-                if (menuChoice == 1)
+                if (menuChoice == 1)    // Monat auswahl
                 {
-                    ChangeDisplayedMonth();
+                    Month.ChangeDisplayedMonth();
+                    Month.Show();
+                } 
+                else if (menuChoice == 2)   // Eintrag löschen
+                {
+                    Month.Show();
+                    int entryChoice = GetEntryChoice();
+                    Entry entry = Month.SelectEntry(entryChoice);
+                    Month.DeleteEntry(entry);
                 }
             }
-
         }
-
-        private static void ChangeDisplayedMonth()
+        private static void FixCostMenu()
         {
-            string monthDate = Month.GetMonthUserInput();
-            Month.Show(monthDate);
+            int menuChoice = GetMenuChoice();
+            if (menuChoice == 0)
+            {
+                Environment.Exit(0);
+            }
+            else
+            {
+                if (menuChoice == 1) // Fixkosten-Eintrag löschen
+                {
+                    int fixCostChoice = GetFixCostChoice();
+                    Entry entry = FixCost.SelectEntry(fixCostChoice);
+                    FixCost.DeleteEntry(entry); 
+                }
+            }
         }
+
+        private static int GetEntryChoice()
+        {
+            if (Month.entriesCount == 0)
+            {
+                Console.WriteLine($"Keine Einträge im Monat: {Month.monthDate} vorhanden.");
+                return -1;
+            }
+            int userChoice = -1;
+            string userInput = "";
+            bool isValid = false;
+            while (!isValid)
+            {
+                Console.WriteLine("Zum löschen eines Eintrags bitte Nummer eingeben: ");
+                userInput = Console.ReadLine();
+                if (int.TryParse(userInput, out int temp) && temp < Month.entriesCount && temp >= 0)
+                {
+                    userChoice = temp;
+                    isValid = true; 
+                }
+            }
+            if (userChoice < 0)
+            {
+                Console.WriteLine($"Error: Keine gültige Auswahl getroffen. Auswahl: {userChoice}!");
+            }
+
+            return userChoice;
+        }
+    
+        private static int GetFixCostChoice()
+        {
+            if (FixCost.fixCount < 1)
+            {
+                Console.WriteLine("Error: Es sind noch keine FixKosten-Einträge vorhanden!");
+                return -1;
+            } 
+            int userChoice = -1;
+            string userInput = "";
+            bool isValid = false;
+            while (!isValid)
+            {
+                Console.WriteLine("Zum löschen des Fixkosten-Eintrages, bitte Nummer eingeben: ");
+                userInput = Console.ReadLine();
+                if (int.TryParse(userInput, out int temp) && temp < FixCost.fixCount && temp >= 0)
+                {
+                   userChoice = temp; 
+                   isValid = true;
+                }
+            }
+            if (userChoice < 0)
+            {
+                Console.WriteLine($"Error: Keine gültige Auswahl getroffen. Auswahl: {userChoice}!");
+            }
+
+            return userChoice; 
+        } 
 
         private static int GetMenuChoice()
         {

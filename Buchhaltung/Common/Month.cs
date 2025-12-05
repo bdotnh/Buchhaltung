@@ -1,67 +1,136 @@
-using Utf8Json.Formatters;
+using System;
+using System.Data;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+
 
 namespace Buchhaltung.Common
 {
     public class Month
     {
-        public static string _srcPath = "/home/ben/cs_workspace/Buchhaltung/Src";
-        private static List<string> allFiles = Common.GetFilenamesInDir(_srcPath);
-        private static List<string> allMonthFiles = allFiles.FindAll(x => (x.Contains("_data.json")));
         private string[] promptMonthMenu =
         [
             "Exit",
             "Monat ändern"
         ];
-
+        public static string monthDate = "";
+        public static int entriesCount = 0;
+        private static string filepath = "";
+        private static List<Entry> entries = new List<Entry>();
+        private static JsonSerializerOptions options = new JsonSerializerOptions
+        {
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            WriteIndented = true
+        };
 
         public Month()
         {
-            Show("");
+            Show();
+            LoadEntries();
+            entriesCount = entries.Count;
             Menu menu = new Menu(2);
+        }
 
+        public static void DeleteEntry(Entry entry)
+        {
+            entries.Remove(entry);
+            if (SaveAllEntries() == 0)
+            {
+                Console.WriteLine("Fixkosten-Eintrag wurde erfolgreich gelöscht.");
+            }
+            else
+            {
+                Console.WriteLine("Error: Fehler beim löschen des Fixkosten-Eintrags!");
+            }
+        }
+
+        public static Entry SelectEntry(int number)
+        {
+            Console.WriteLine($"Ausgewählte Nummer: {number}.");
+            Entry selectedEntry = entries[number];
+
+            return selectedEntry;
+        }
+
+        public static int SaveAllEntries()
+        {
+            if (!File.Exists(filepath))
+            {
+                return -1;
+            }
+            var jsonData = JsonSerializer.Serialize(entries, options);
+            File.WriteAllText(filepath, jsonData, new UTF8Encoding());
+
+            return 0;
+        }
+
+        public static void ChangeDisplayedMonth()
+        {
+            string monthDate = GetMonthUserInput();
+            Month.monthDate = monthDate;
         }
 
         public static string GetMonthUserInput()
         {
+            string[] allFilesInSrcPath = Directory.GetFiles(Common.currDir);
+            List<string> allMonthFilepaths = new List<string>();
+            List<string> allSavedMonths = new List<string>();
+            foreach (string filepath in allFilesInSrcPath)
+            {
+                allMonthFilepaths.Add(filepath);
+                string month = filepath.Substring(filepath.LastIndexOf('/') + 1);
+                month = month.Substring(0, month.LastIndexOf('_'));
+                allSavedMonths.Add(month);
+            }
+
             string userInput = "";
             bool isValid = false;
             while (!isValid)
             {
+                Console.WriteLine("Alle gespeicherten Monate: ");
+                foreach (string month in allSavedMonths)
+                {
+                    Console.WriteLine($"Monat: {month}.");
+                }
+
                 Console.WriteLine("Monat: ");
                 userInput = Console.ReadLine();
-                if (allMonthFiles.Contains(userInput))
+                if (allSavedMonths.Contains(userInput))
                 {
                     isValid = true;
-                }
+                } 
                 else
                 {
-                    Console.WriteLine($"Monat: {userInput} ist nicht gespeichert. Sollen alle gespeicherten Monate angezeigt werden? J/n: ");
-                    userInput = Console.ReadLine();
-                    if (userInput == "J" | userInput == "j")
-                    {
-                        Console.WriteLine("Alle gespeicherten Monate: ");
-                        foreach (string filename in allMonthFiles)
-                        {
-                            Console.Write($"{filename.Substring(0, filename.LastIndexOf("_"))}; ");
-                        }
-                    }
+                    Console.WriteLine($"Der ausgeählte Monat: {userInput} ist leider nicht verfügbar!");
                 }
             }
+            monthDate = userInput;
+
             return userInput;
         }
 
-        public static void Show(string monthDate)
+        public static void Show()
         {
             if (monthDate == "")
             {
                 monthDate = Common.GetCurrentMonth();
             }
-            string filename = Directory.GetCurrentDirectory() + "/Src/" + monthDate + "_data.json";
-            List<Entry> entries = Common.GetEntries(filename);
+            filepath = Directory.GetCurrentDirectory() + "/Src/" + monthDate + "_data.json";
+            List<Entry> entries = Common.GetEntries(filepath);
             Console.WriteLine(" ID   |     Datum     |   Betrag  |    Geschäft    | IstAusgabe | IstFix |");
             for (int i = 0; i < entries.Count; i++)
             {
                 Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}    |    {entries[i].Geschäft}   |   {entries[i].IstAusgabe}     |   {entries[i].IstFix}");
+            }
+        }
+
+        private static void LoadEntries()
+        {
+            entries = Common.GetEntries(filepath);
+            if (entries.Count < 1)
+            {
+                Console.WriteLine("Error: Es wurden keine gespeicherten Fixkosten gefunden!");
             }
         }
     }

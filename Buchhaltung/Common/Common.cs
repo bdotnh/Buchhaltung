@@ -1,5 +1,4 @@
 using System;
-using System.Dynamic;
 using System.Text.Json;
 
 namespace Buchhaltung.Common
@@ -19,7 +18,7 @@ namespace Buchhaltung.Common
             }
             if (allFilenames.Count < 1)
             {
-                throw new Exception($"No files found in directory: {dirPath}.");
+                Console.WriteLine($"Keine Datein im Pfad: {currDir} gefunden!");
             }
 
             return allFilenames;

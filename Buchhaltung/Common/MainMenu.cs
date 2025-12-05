@@ -1,6 +1,4 @@
 using System;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
 
 namespace Buchhaltung.Common
 {
@@ -39,7 +37,7 @@ namespace Buchhaltung.Common
                     float betrag = 12.34f;
                     string geschäft = "Aldi";
                     bool istAusgabe = true;
-                    bool istFix = false;
+                    bool istFix = true; 
 
                     Entry testEntry = new Entry(
                         datum, betrag, geschäft, istAusgabe, istFix
@@ -49,11 +47,11 @@ namespace Buchhaltung.Common
                 }
                 else if (menuChoice == 2)
                 {
-                    Month month = new Month();
+                    _ = new Month();
                 }
                 else if (menuChoice == 3)
                 {
-                    FixCost fixCost = new FixCost();
+                    _ = new FixCost();
                 }
             }
         }

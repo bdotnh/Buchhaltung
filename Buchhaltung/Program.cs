@@ -11,8 +11,7 @@ namespace Buchhaltung
             Console.WriteLine("Initialisierung...");
 
             string currDir = Directory.GetCurrentDirectory() + "/Src/";
-            
-            if (!Directory.Exists(Directory.GetCurrentDirectory() + "/Src"))
+            if (!Directory.Exists(currDir))
             {
                 Directory.CreateDirectory(currDir);
             }
