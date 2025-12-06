@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Buchhaltung")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2153925dfa602d31d4970aa85182673547ee8bf4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+99b13f470e3ec1457b8a7f9219a7c4c6784e33f0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Buchhaltung")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Buchhaltung")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

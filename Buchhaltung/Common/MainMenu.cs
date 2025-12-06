@@ -11,10 +11,11 @@ namespace Buchhaltung.Common
     {
         private string[] promptMainMenu =
         [
-            "Exit",
-            "Neuer Eintrag",
-            "Monats-Übersicht",
-            "Fix Kosten"
+            """Exit""",
+            """Neuer Eintrag""",
+            """Monats-Übersicht""",
+            """Fix Kosten""",
+            """Monats-Vergleich"""
         ];
 
         public MainMenu()
@@ -23,7 +24,7 @@ namespace Buchhaltung.Common
             while (!onExit)
             {
                 Menu.ShowPrompts(promptMainMenu);
-                string message = "Eingabe: ";
+                string message = """Eingabe: """;
                 int menuChoice = User.GetInputNumber(message);
                 if (menuChoice == (int)EMenu.Exit)
                 {
@@ -43,9 +44,9 @@ namespace Buchhaltung.Common
                             (bool)inputs.GetValueOrDefault("IstFix")
                         );
                         */
-                        string datum = "30.11.2025";
+                        string datum = """30.11.2025""";
                         float betrag = 12.34f;
-                        string geschäft = "Aldi";
+                        string geschäft = """Aldi""";
                         bool istAusgabe = true;
                         bool istFix = true;
 

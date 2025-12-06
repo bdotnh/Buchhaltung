@@ -5,10 +5,10 @@ namespace Buchhaltung.Common
 {
     public class Common
     {
-        public static string currDir = Directory.GetCurrentDirectory() + "/Src/";
-        public static string fileFormat = "_data.json"; 
-        public static string currMonthFilepath = currDir + GetCurrentMonth() + fileFormat; 
-        public static string fixCostFilepath = currDir + "FixCosts" + fileFormat;
+        private static string currDir = Directory.GetCurrentDirectory() + """/Src/""";
+        public static string fileFormat = """_data.json""";
+        public static string currMonthFilepath = currDir + GetCurrentMonth() + fileFormat;
+        public static string fixCostFilepath = currDir + """FixCosts""" + fileFormat;
         public static List<string> GetFilenamesInDir(string dirPath)
         {
             List<string> allFilenames = new List<string>();
@@ -18,7 +18,7 @@ namespace Buchhaltung.Common
             }
             if (allFilenames.Count < 1)
             {
-                Console.WriteLine($"Keine Datein im Pfad: {currDir} gefunden!");
+                Console.WriteLine($"""Keine Datein im Pfad: {currDir} gefunden!""");
             }
 
             return allFilenames;
@@ -29,7 +29,7 @@ namespace Buchhaltung.Common
             var jsonData = File.ReadAllText(filePath);
             if (jsonData.Length < 1)
             {
-                Console.WriteLine($"Datei: {filePath} ist leer.");
+                Console.WriteLine($"""Datei: {filePath} ist leer.""");
                 return [];
             }
             var entryList = JsonSerializer.Deserialize<List<Entry>>(jsonData)
@@ -42,7 +42,7 @@ namespace Buchhaltung.Common
         {
             string currentMonth = "";
             var today = DateOnly.FromDateTime(DateTime.Now); // Todays date in mm/dd/yyyy format.
-            currentMonth = $"{today.Month}.{today.Year}";
+            currentMonth = $"""{today.Month}.{today.Year}""";
 
             return currentMonth;
         }

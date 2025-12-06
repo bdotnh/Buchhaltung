@@ -34,17 +34,17 @@ namespace Buchhaltung.Common
             entries.Remove(entry);
             if (SaveAllEntries() == 0)
             {
-                Console.WriteLine("Fixkosten-Eintrag wurde erfolgreich gelöscht.");
+                Console.WriteLine("""Fixkosten-Eintrag wurde erfolgreich gelöscht.""");
             }
             else
             {
-                Console.WriteLine("Error: Fehler beim löschen des Fixkosten-Eintrags!");
+                Console.WriteLine("""Error: Fehler beim löschen des Fixkosten-Eintrags!""");
             }
         }
 
         public static Entry SelectEntry(int number)
         {
-            Console.WriteLine($"Ausgewählte Nummer: {number}.");
+            Console.WriteLine($"""Ausgewählte Nummer: {number}.""");
             Entry selectedEntry = entries[number];
 
             return selectedEntry;
@@ -87,10 +87,10 @@ namespace Buchhaltung.Common
         public static void Show()
         {
             fixCount = entries.Count;
-            Console.WriteLine(" ID   |     Datum     |   Betrag  |    Geschäft    | IstAusgabe | IstFix |");
+            Console.WriteLine(""" ID   |     Datum     |   Betrag  |    Geschäft    | IstAusgabe | IstFix |""");
             for (int i = 0; i < fixCount; i++)
             {
-                Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}    |    {entries[i].Geschäft}   |   {entries[i].IstAusgabe}     |   {entries[i].IstFix}");
+                Console.WriteLine($""" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}    |    {entries[i].Geschäft}   |   {entries[i].IstAusgabe}     |   {entries[i].IstFix}""");
             }
             if (moneyLeft > 0.0f)
             {
@@ -98,7 +98,7 @@ namespace Buchhaltung.Common
             }
             else
             {
-                Console.WriteLine($"Feste monatliche Ausgaben: {fixMoneySpend} €.");
+                Console.WriteLine($"""Feste monatliche Ausgaben: {fixMoneySpend} €.""");
             }
         }
 
@@ -126,7 +126,7 @@ namespace Buchhaltung.Common
             entries = Common.GetEntries(filepath);
             if (entries.Count < 1)
             {
-                Console.WriteLine("Error: Es wurden keine gespeicherten Fixkosten gefunden!");
+                Console.WriteLine("""Error: Es wurden keine gespeicherten Fixkosten gefunden!""");
             }
             CalculateFixCosts();
         }

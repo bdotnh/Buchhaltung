@@ -16,7 +16,7 @@ namespace Buchhaltung.Common
             while (!isValid)
             {
                 userInput = Console.ReadLine();
-                if (userInput == "J" || userInput == "j")
+                if (userInput == """J""" || userInput == """j""")
                 {
                     isYes = true;
                     isValid = true;
@@ -45,7 +45,7 @@ namespace Buchhaltung.Common
             }
             if (menuChioce < 0)
             {
-                Console.WriteLine("Ups! Bei der Eingabe ist etwas schiefgelaufen.");
+                Console.WriteLine("""Ups! Bei der Eingabe ist etwas schiefgelaufen.""");
             }
 
             return menuChioce;
@@ -53,7 +53,7 @@ namespace Buchhaltung.Common
 
         public static string GetMonthInput()
         {
-            string[] allFilesInSrcPath = Directory.GetFiles(Common.currDir);
+            string[] allFilesInSrcPath = Directory.GetFiles(Directory.GetCurrentDirectory() + "/Src/");
             List<string> allMonthFilepaths = new List<string>();
             List<string> allSavedMonths = new List<string>();
             foreach (string filepath in allFilesInSrcPath)
@@ -68,13 +68,13 @@ namespace Buchhaltung.Common
             bool isValid = false;
             while (!isValid)
             {
-                Console.WriteLine("Alle gespeicherten Monate: ");
+                Console.WriteLine("""Alle gespeicherten Monate: """);
                 foreach (string month in allSavedMonths)
                 {
-                    Console.WriteLine($"Monat: {month}.");
+                    Console.WriteLine($"""Monat: {month}.""");
                 }
 
-                Console.WriteLine("Monat: ");
+                Console.WriteLine("""Monat: """);
                 userInput = Console.ReadLine();
                 if (allSavedMonths.Contains(userInput))
                 {
@@ -82,7 +82,7 @@ namespace Buchhaltung.Common
                 }
                 else
                 {
-                    Console.WriteLine($"Der ausgeählte Monat: {userInput} ist leider nicht verfügbar!");
+                    Console.WriteLine($"""Der ausgeählte Monat: {userInput} ist leider nicht verfügbar!""");
                 }
             }
             Month.monthDate = userInput;
@@ -96,19 +96,19 @@ namespace Buchhaltung.Common
             bool isVaild = false;
             while (!isVaild)
             {
-                Console.Write("Datum: ");
+                Console.Write("""Datum: """);
                 userInput = Console.ReadLine();
                 if (!String.IsNullOrEmpty(userInput))
                 {
-                    _ = userInput.Replace(",", ".");
+                    _ = userInput.Replace(""",""", """.""");
                     if (userInput.IndexOf('.') == 1)
                     {
-                        _ = userInput.Insert(0, "0");
+                        _ = userInput.Insert(0, """0""");
                     }
 
                     if (userInput.LastIndexOf('.') == 4)
                     {
-                        _ = userInput.Insert(3, "0");
+                        _ = userInput.Insert(3, """0""");
                     }
 
                     if (userInput.Length == 10 && userInput.Count(f => f == '.') == 2)
@@ -128,7 +128,7 @@ namespace Buchhaltung.Common
             bool isVaild = false;
             while (!isVaild)
             {
-                Console.Write("Betrag: ");
+                Console.Write("""Betrag: """);
                 betragInput = Console.ReadLine();
                 _ = betragInput.Replace(',', '.');
                 if (float.TryParse(betragInput, out betragValue))
@@ -149,7 +149,7 @@ namespace Buchhaltung.Common
             bool isVaild = false;
             while (!isVaild)
             {
-                Console.Write("Geschäft: ");
+                Console.Write("""Geschäft: """);
                 GeschäftInput = Console.ReadLine();
                 if (!string.IsNullOrEmpty(GeschäftInput) && GeschäftInput.Length > 2)
                 {
@@ -168,15 +168,15 @@ namespace Buchhaltung.Common
             string userInput = "";
             while (!isValid)
             {
-                Console.WriteLine("Ausgabe? J/n: ");
+                Console.WriteLine("""Ausgabe? J/n: """);
                 userInput = Console.ReadLine();
-                if (userInput == "J" || userInput == "j")
+                if (userInput == """J""" || userInput == """j""")
                 {
                     istAusgabe = true;
                     isValid = true;
                     break;
                 }
-                else if (userInput == "N" || userInput == "n")
+                else if (userInput == """N""" || userInput == """n""")
                 {
                     istAusgabe = false;
                     isValid = true;
@@ -194,14 +194,14 @@ namespace Buchhaltung.Common
             string userInput = "";
             while (!isValid)
             {
-                Console.Write("Zu Fixkosten hinzufügen? J/n: ");
+                Console.Write("""Zu Fixkosten hinzufügen? J/n: """);
                 userInput = Console.ReadLine();
-                if (userInput == "J" || userInput == "j")
+                if (userInput == """J""" || userInput == """j""")
                 {
                     istFix = true;
                     isValid = true;
                 }
-                else if (userInput == "N" || userInput == "n")
+                else if (userInput == """N""" || userInput == """n""")
                 {
                     istFix = false;
                     isValid = true;

@@ -9,13 +9,13 @@ namespace Buchhaltung.Common
     public class Month
     {
         public static string monthDate = "";
-        public static float entriesCount = 0.0f;
+        public static int entriesCount = 0;
         public static float moneyEarned = 0.0f;
         public static float moneySpend = 0.0f;
         public static float moneyLeft = 0.0f;
+        public static List<Entry> entries = new List<Entry>();
 
         private static string filepath = "";
-        private static List<Entry> entries = new List<Entry>();
         private static JsonSerializerOptions options = new JsonSerializerOptions
         {
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,

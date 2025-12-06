@@ -6,23 +6,18 @@ namespace Buchhaltung.Common
     {
         public static string[] menuPrompts = [];
 
-        private string[] promptEntryMenu =
-        [
-            "Exit",
+        private string[] promptEntryMenu = [
+            "Exit"
         ];
 
         private string[] promptMonthMenu =
         [
-            "Exit",
-            "Monat ändern",
-            "Eintrag löschen"
+            "Exit", "Monat ändern", "Eintrag löschen"
         ];
 
-        private string[] promptFixMenu =
-        [
-            "Exit",
-            "Fixkosten-Eintrag löschen"
-        ];
+        private string[] promptFixMenu = [
+            "Exit", "Fixkosten-Eintrag löschen"
+            ];
 
         public Menu(int menu)
         {
@@ -39,7 +34,9 @@ namespace Buchhaltung.Common
 
         public enum EMonthMenu
         {
-            Exit = 0, ChangeMonth, DeleteEntry
+            Exit = 0,
+            ChangeMonth,
+            DeleteEntry,
         }
 
         private static void MonthMenu()
@@ -52,12 +49,12 @@ namespace Buchhaltung.Common
             }
             else
             {
-                if (menuChoice == (int)EMonthMenu.ChangeMonth)    
+                if (menuChoice == (int)EMonthMenu.ChangeMonth)
                 {
                     Month.ChangeDisplayedMonth();
                     Month.Show();
                 }
-                else if (menuChoice == (int)EMonthMenu.DeleteEntry)   
+                else if (menuChoice == (int)EMonthMenu.DeleteEntry)
                 {
                     Month.Show();
                     int entryChoice = GetEntryChoice();
@@ -69,7 +66,8 @@ namespace Buchhaltung.Common
 
         public enum EFixMenu
         {
-            Exit = 0, DeleteEntry
+            Exit = 0,
+            DeleteEntry,
         }
 
         private static void FixCostMenu()
@@ -78,7 +76,7 @@ namespace Buchhaltung.Common
             int menuChoice = User.GetInputNumber(message);
             if (menuChoice == (int)EFixMenu.Exit)
             {
-                 _ = new MainMenu();
+                _ = new MainMenu();
             }
             else
             {
@@ -93,7 +91,7 @@ namespace Buchhaltung.Common
 
         private static int GetEntryChoice()
         {
-            if (Month.entriesCount == 0)
+            if (Month.entries.Count == 0)
             {
                 Console.WriteLine($"Keine Einträge im Monat: {Month.monthDate} vorhanden.");
                 return -1;

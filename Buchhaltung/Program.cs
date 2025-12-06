@@ -7,9 +7,9 @@ namespace Buchhaltung
     {
         public static void Init()
         {
-            Console.WriteLine("Initialisierung...");
+            Console.WriteLine("""Initialisierung...""");
 
-            string currDir = Directory.GetCurrentDirectory() + "/Src/";
+            string currDir = Directory.GetCurrentDirectory() + """/Src/""";
             if (!Directory.Exists(currDir))
             {
                 Directory.CreateDirectory(currDir);
@@ -25,7 +25,7 @@ namespace Buchhaltung
                 File.WriteAllText(Common.Common.fixCostFilepath, "", new UTF8Encoding());
             }
 
-            Console.WriteLine("Initialisierung erfolgreich abgeschlossen.");
+            Console.WriteLine("""Initialisierung erfolgreich abgeschlossen.""");
         }
 
         public static int Main()

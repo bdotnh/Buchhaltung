@@ -7,7 +7,7 @@ namespace Buchhaltung.Common
 {
     public class Entry
     {
-        public string[] Categories = ["Datum", "Betrag", "Geschäft", "EinAusgabe", "IstFix"];
+        public string[] Categories = ["""Datum""", """Betrag""", """Geschäft""", """EinAusgabe""", """IstFix"""];
         public string Datum { get; set; }
         public float Betrag { get; set; }
         public string Geschäft { get; set; }
@@ -50,12 +50,12 @@ namespace Buchhaltung.Common
                 string jsonData = JsonSerializer.Serialize(entryList, options);
                 File.WriteAllText(filePath, jsonData, new UTF8Encoding());
             }
-            Console.WriteLine("Eintrag wurde gespeichert.");
+            Console.WriteLine("""Eintrag wurde gespeichert.""");
             
             if (entry.IstFix)
             {
                 FixCost.Save(entry);
-                Console.WriteLine("Eintrag wurde zu den Fixkosten hinzugefügt."); 
+                Console.WriteLine("""Eintrag wurde zu den Fixkosten hinzugefügt."""); 
             }
         }
 
@@ -63,37 +63,37 @@ namespace Buchhaltung.Common
         {
             Dictionary<string, object> Inputs = new Dictionary<string, object>
             {
-                { "Datum", "" },
-                { "Betrag", 0.0f },
-                { "Geschäft", "" },
-                { "IstAusgabe", true },
-                { "IstFix", false }
+                { """Datum""", "" },
+                { """Betrag""", 0.0f },
+                { """Geschäft""", "" },
+                { """IstAusgabe""", true },
+                { """IstFix""", false }
             };
 
             string datum = User.GetDatumInput();
-            if (!Inputs.TryAdd("Datum", datum))
+            if (!Inputs.TryAdd("""Datum""", datum))
             {
-                Console.WriteLine($"Fehler beim speichern des Datums: {datum}!");
+                Console.WriteLine($"""Fehler beim speichern des Datums: {datum}!""");
             }
             float betrag = User.GetBetragInput();
-            if (!Inputs.TryAdd("Betrag", betrag))
+            if (!Inputs.TryAdd("""Betrag""", betrag))
             {
-                Console.WriteLine($"Fehler beim speichern des Betrags: {betrag}!");
+                Console.WriteLine($"""Fehler beim speichern des Betrags: {betrag}!""");
             }
             string geschäft = User.GetGeschäftInput();
-            if (!Inputs.TryAdd("Geschäft", geschäft))
+            if (!Inputs.TryAdd("""Geschäft""", geschäft))
             {
-                Console.WriteLine($"Fehler beim speichern des Datums: {geschäft}!");
+                Console.WriteLine($"""Fehler beim speichern des Datums: {geschäft}!""");
             }
             bool istAusgabe = User.GetIstAusgabeInput();
-            if (!Inputs.TryAdd("IstAusgabe", istAusgabe))
+            if (!Inputs.TryAdd("""IstAusgabe""", istAusgabe))
             {
-                Console.WriteLine($"Fehler beim speichern des Datums: {istAusgabe}!");
+                Console.WriteLine($"""Fehler beim speichern des Datums: {istAusgabe}!""");
             }
             bool istFix = User.GetIstFixInput();
-            if (!Inputs.TryAdd("IstFix", istFix))
+            if (!Inputs.TryAdd("""IstFix""", istFix))
             {
-                Console.WriteLine($"Fehler beim speichern des Datums: {istFix}!");
+                Console.WriteLine($"""Fehler beim speichern des Datums: {istFix}!""");
             }
 
             return Inputs;
