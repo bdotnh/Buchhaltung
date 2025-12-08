@@ -8,39 +8,32 @@ namespace Buchhaltung.Common
 {
     public class Month
     {
-        public static string monthDate = "";
-        public static int entriesCount = 0;
-        public static float moneyEarned = 0.0f;
-        public static float moneySpend = 0.0f;
-        public static float moneyLeft = 0.0f;
-        public static List<Entry> entries = new List<Entry>();
+        private string date { get; set; }
+        public string Date { get => date; }
+        private float moneyIncome { get; set; }
+        public float MoneyIncome { get => moneyIncome; }
+        private float moneySpend { get; set; } 
+        public float MoneySpend { get => moneySpend; }
+        private float moneyLeft { get; set; } 
+        public float MoneyLeft { get => moneyLeft; }
+        private List<Entry> entries = new List<Entry>();
+        public int EntryCount { get => entries.Count; }
+        private string filepath = "";
 
-        private static string filepath = "";
-        private static JsonSerializerOptions options = new JsonSerializerOptions
+        public Month(string Date)
         {
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            WriteIndented = true
-        };
-
-        public Month()
-        {
-            if (monthDate == "")
-            {
-                monthDate = Common.GetCurrentMonth();
-            }
+            date = Date;
             LoadEntries();
             CalculateMonth();
-            Show();
-            entriesCount = entries.Count;
-            _ = new Menu(2);
         }
 
-        public static void DeleteEntry(Entry entry)
+        public void DeleteEntry(Entry entry)
         {
             entries.Remove(entry);
             if (SaveAllEntries() == 0)
             {
                 Console.WriteLine("Fixkosten-Eintrag wurde erfolgreich gelöscht.");
+
             }
             else
             {
@@ -48,54 +41,43 @@ namespace Buchhaltung.Common
             }
         }
 
-        public static Entry SelectEntry(int number)
+        public Entry SelectEntry(int number)
         {
             Entry selectedEntry = entries[number];
 
             return selectedEntry;
         }
 
-        public static int SaveAllEntries()
+        public int SaveAllEntries()
         {
             if (!File.Exists(filepath))
             {
                 return -1;
             }
-            var jsonData = JsonSerializer.Serialize(entries, options);
+            var jsonData = JsonSerializer.Serialize(entries, Common.JsonOptions);
             File.WriteAllText(filepath, jsonData, new UTF8Encoding());
 
             return 0;
         }
 
-        public static void ChangeDisplayedMonth()
+        public void Show()
         {
-            monthDate = User.GetMonthInput();
-        }
-
-        private static void InitMonth()
-        {
-            if (string.IsNullOrEmpty(monthDate))
-            {
-                monthDate = Common.GetCurrentMonth();
-            } 
-            filepath = Directory.GetCurrentDirectory() + "/Src/" + monthDate + "_data.json";
-        }
-
-        public static void Show()
-        {
-            InitMonth();
             List<Entry> entries = Common.GetEntries(filepath);
             Console.WriteLine(" ID   |     Datum     |   Betrag  |    Geschäft    | IstAusgabe | IstFix |");
             for (int i = 0; i < entries.Count; i++)
             {
                 Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}    |    {entries[i].Geschäft}   |   {entries[i].IstAusgabe}     |   {entries[i].IstFix}");
             }
-            Console.WriteLine($"Monatsübersicht:\nEinnahmen: {moneyEarned} €,     Ausgaben: {moneySpend} €,     Übrig: {moneyLeft} €.");
+            ShowTotals();
         }
 
-        private static void CalculateMonth()
+        private void ShowTotals()
         {
-            InitMonth();
+            Console.WriteLine($"Monatsübersicht:\nEinkommen: {moneyIncome} €,     Ausgaben: {moneySpend} €,     Gespart: {moneyLeft} €.");
+        }
+
+        private void CalculateMonth()
+        {
             for (int i = 0; i < entries.Count; i++)
             {
                 if (entries[i].IstAusgabe)
@@ -104,15 +86,16 @@ namespace Buchhaltung.Common
                 }
                 else
                 {
-                    moneyEarned += entries[i].Betrag;
+                    moneyIncome += entries[i].Betrag;
                 }
             }
-            moneyLeft = moneyEarned - moneySpend;
+            moneyLeft = moneyIncome - moneySpend;
+
         }
 
-        private static void LoadEntries()
+        private void LoadEntries()
         {
-            InitMonth();
+            filepath = Directory.GetCurrentDirectory() + "/Src/" + date + "_data.json";
             entries = Common.GetEntries(filepath);
             if (entries.Count < 1)
             {

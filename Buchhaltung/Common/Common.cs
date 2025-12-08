@@ -1,5 +1,5 @@
-using System;
 using System.Text.Json;
+using System.Text.Encodings.Web;
 
 namespace Buchhaltung.Common
 {
@@ -9,6 +9,13 @@ namespace Buchhaltung.Common
         public static string fileFormat = """_data.json""";
         public static string currMonthFilepath = currDir + GetCurrentMonth() + fileFormat;
         public static string fixCostFilepath = currDir + """FixCosts""" + fileFormat;
+        public static JsonSerializerOptions JsonOptions = new JsonSerializerOptions
+        {
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            WriteIndented = true
+        };
+
+
         public static List<string> GetFilenamesInDir(string dirPath)
         {
             List<string> allFilenames = new List<string>();

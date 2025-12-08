@@ -2,11 +2,26 @@ using System;
 
 namespace Buchhaltung.Common
 {
+    public enum EMonthMenu
+    {
+        Exit = 0,
+          ChangeMonth,
+            DeleteEntry,
+        }
+        public enum EFixMenu
+        {
+            Exit = 0,
+            DeleteEntry,
+        }
+
+
+
     public class Menu
     {
         public static string[] menuPrompts = [];
 
-        private string[] promptEntryMenu = [
+        private string[] promptEntryMenu = 
+        [
             "Exit"
         ];
 
@@ -15,9 +30,15 @@ namespace Buchhaltung.Common
             "Exit", "Monat ändern", "Eintrag löschen"
         ];
 
-        private string[] promptFixMenu = [
+        private string[] promptFixMenu = 
+        [
             "Exit", "Fixkosten-Eintrag löschen"
-            ];
+        ];
+
+        private string[] promptMonthComparisonMenu = 
+        [
+            "Exit", 
+        ];
 
         public Menu(int menu)
         {
@@ -32,15 +53,9 @@ namespace Buchhaltung.Common
             }
         }
 
-        public enum EMonthMenu
-        {
-            Exit = 0,
-            ChangeMonth,
-            DeleteEntry,
-        }
-
         private static void MonthMenu()
         {
+            Month month = new("");
             string message = "Eingabe: ";
             int menuChoice = User.GetInputNumber(message);
             if (menuChoice == (int)EMonthMenu.Exit)
@@ -51,23 +66,31 @@ namespace Buchhaltung.Common
             {
                 if (menuChoice == (int)EMonthMenu.ChangeMonth)
                 {
-                    Month.ChangeDisplayedMonth();
-                    Month.Show();
+                    string monthDate = User.GetMonthInput("Monat: ");
+                    month = new Month(monthDate);
+                    month.Show();
                 }
                 else if (menuChoice == (int)EMonthMenu.DeleteEntry)
                 {
-                    Month.Show();
-                    int entryChoice = GetEntryChoice();
-                    Entry entry = Month.SelectEntry(entryChoice);
-                    Month.DeleteEntry(entry);
+                    month.Show();
+                    int entryChoice = GetEntryChoice(month);
+                    Entry entry = month.SelectEntry(entryChoice);
+                    month.DeleteEntry(entry);
                 }
             }
         }
 
-        public enum EFixMenu
+        private static int GetEntryChoice(Month month)
         {
-            Exit = 0,
-            DeleteEntry,
+            if (month.EntryCount == 0)
+            {
+                Console.WriteLine($"Keine Einträge im ausgewähltem Monat vorhanden.");
+                return -1;
+            }
+            string message = "Zum löschen eines Eintrags bitte Nummer eingeben: ";
+            int userChoice = User.GetInputNumber(message);
+
+            return userChoice;
         }
 
         private static void FixCostMenu()
@@ -87,19 +110,6 @@ namespace Buchhaltung.Common
                     FixCost.DeleteEntry(entry);
                 }
             }
-        }
-
-        private static int GetEntryChoice()
-        {
-            if (Month.entries.Count == 0)
-            {
-                Console.WriteLine($"Keine Einträge im Monat: {Month.monthDate} vorhanden.");
-                return -1;
-            }
-            string message = "Zum löschen eines Eintrags bitte Nummer eingeben: ";
-            int userChoice = User.GetInputNumber(message);
-
-            return userChoice;
         }
 
         private static int GetFixCostChoice()

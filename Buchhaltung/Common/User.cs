@@ -51,7 +51,7 @@ namespace Buchhaltung.Common
             return menuChioce;
         }
 
-        public static string GetMonthInput()
+        public static string GetMonthInput(string message)
         {
             string[] allFilesInSrcPath = Directory.GetFiles(Directory.GetCurrentDirectory() + "/Src/");
             List<string> allMonthFilepaths = new List<string>();
@@ -74,7 +74,7 @@ namespace Buchhaltung.Common
                     Console.WriteLine($"""Monat: {month}.""");
                 }
 
-                Console.WriteLine("""Monat: """);
+                Console.WriteLine(message);
                 userInput = Console.ReadLine();
                 if (allSavedMonths.Contains(userInput))
                 {
@@ -85,7 +85,6 @@ namespace Buchhaltung.Common
                     Console.WriteLine($"""Der ausgeählte Monat: {userInput} ist leider nicht verfügbar!""");
                 }
             }
-            Month.monthDate = userInput;
 
             return userInput;
         }
