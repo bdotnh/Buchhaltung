@@ -13,21 +13,19 @@ namespace Buchhaltung.Common
         public string Geschäft { get; set; }
         public bool IstAusgabe { get; set; }
         public bool IstFix { get; set; }
-        private static List<Entry> entries = new List<Entry>();
 
         public Entry(string datum, float betrag, string geschäft,
                         bool istAusgabe, bool istFix)
         {
-            this.Datum = datum;
-            this.Betrag = betrag;
-            this.Geschäft = geschäft;
-            this.IstAusgabe = istAusgabe;
-            this.IstFix = istFix;
+            Datum = datum;
+            Betrag = betrag;
+            Geschäft = geschäft;
+            IstAusgabe = istAusgabe;
+            IstFix = istFix;
         }
 
         public static void Save(string filePath, Entry entry)
         {
-
             var options = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
@@ -45,8 +43,10 @@ namespace Buchhaltung.Common
             }
             else
             {
-                var entryList = new List<Entry>();
-                entryList.Add(entry);
+                var entryList = new List<Entry>
+                {
+                    entry
+                };
                 string jsonData = JsonSerializer.Serialize(entryList, options);
                 File.WriteAllText(filePath, jsonData, new UTF8Encoding());
             }
@@ -63,13 +63,7 @@ namespace Buchhaltung.Common
         {
             Dictionary<string, object> Inputs = new Dictionary<string, object>
             {
-                { """Datum""", "" },
-                { """Betrag""", 0.0f },
-                { """Geschäft""", "" },
-                { """IstAusgabe""", true },
-                { """IstFix""", false }
             };
-
             string datum = User.GetDatumInput();
             if (!Inputs.TryAdd("""Datum""", datum))
             {

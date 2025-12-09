@@ -1,5 +1,4 @@
 using System;
-using System.Data;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -19,7 +18,7 @@ namespace Buchhaltung.Common
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             WriteIndented = true
         };
-        private static string filepath = Common.fixCostFilepath;
+        private static string filepath = Common.FixCostFilepath;
         private static List<Entry> entries = new List<Entry>();
 
         public FixCost()

@@ -6,9 +6,9 @@ namespace Buchhaltung.Common
     public class Common
     {
         private static string currDir = Directory.GetCurrentDirectory() + """/Src/""";
-        public static string fileFormat = """_data.json""";
-        public static string currMonthFilepath = currDir + GetCurrentMonth() + fileFormat;
-        public static string fixCostFilepath = currDir + """FixCosts""" + fileFormat;
+        public static string FileFormat = """_data.json""";
+        public static string CurrMonthFilepath = currDir + GetCurrentMonth() + FileFormat;
+        public static string FixCostFilepath = currDir + """FixCosts""" + FileFormat;
         public static JsonSerializerOptions JsonOptions = new JsonSerializerOptions
         {
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
@@ -33,12 +33,12 @@ namespace Buchhaltung.Common
 
         public static List<Entry> GetEntries(string filePath)
         {
-            var jsonData = File.ReadAllText(filePath);
-            if (jsonData.Length < 1)
+            if (!File.Exists(filePath))
             {
-                Console.WriteLine($"""Datei: {filePath} ist leer.""");
+                Console.WriteLine($"Error: Cant GetEntries from path({filePath})!");
                 return [];
             }
+            var jsonData = File.ReadAllText(filePath);
             var entryList = JsonSerializer.Deserialize<List<Entry>>(jsonData)
                              ?? new List<Entry>();
 
@@ -47,9 +47,8 @@ namespace Buchhaltung.Common
 
         public static string GetCurrentMonth()
         {
-            string currentMonth = "";
             var today = DateOnly.FromDateTime(DateTime.Now); // Todays date in mm/dd/yyyy format.
-            currentMonth = $"""{today.Month}.{today.Year}""";
+            string currentMonth = $"""{today.Month}.{today.Year}""";
 
             return currentMonth;
         }

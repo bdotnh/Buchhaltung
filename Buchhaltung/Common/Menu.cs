@@ -14,8 +14,6 @@ namespace Buchhaltung.Common
             DeleteEntry,
         }
 
-
-
     public class Menu
     {
         public static string[] menuPrompts = [];

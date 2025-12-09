@@ -1,4 +1,5 @@
 using System;
+using Utf8Json.Formatters;
 
 namespace Buchhaltung.Common
 {
@@ -10,24 +11,21 @@ namespace Buchhaltung.Common
 
         public static bool AskYesNo()
         {
-            bool isYes = false;
-            string userInput = "";
             bool isValid = false;
             while (!isValid)
             {
-                userInput = Console.ReadLine();
+                string userInput = Console.ReadLine();
                 if (userInput == """J""" || userInput == """j""")
                 {
-                    isYes = true;
-                    isValid = true;
+                    return true;
                 }
                 else
                 {
-                    isValid = true;
+                    return false;
                 }
             }
 
-            return isYes;
+            return false;
         }
 
         public static int GetInputNumber(string message)
@@ -89,125 +87,132 @@ namespace Buchhaltung.Common
             return userInput;
         }
 
+        public static void ClearCurrentConsoleLine()
+        {
+            int currentLineCursor = Console.CursorTop;
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, currentLineCursor);
+        }
+
         public static string GetDatumInput()
         {
-            string userInput = "";
+            // Console.Write('\r' + new string(' ', Console.WindowWidth) + '\r');
             bool isVaild = false;
             while (!isVaild)
             {
-                Console.Write("""Datum: """);
-                userInput = Console.ReadLine();
-                if (!String.IsNullOrEmpty(userInput))
+                string datumHeute = DateOnly.FromDateTime(DateTime.Now).ToString().Replace('/', '.');
+                datumHeute = FormatDate(datumHeute);
+                Console.WriteLine($"Datum: {datumHeute} ( Für heutiges Datum 'Enter' drücken )");
+                string userInput = Console.ReadLine();
+                if (userInput == "")
                 {
-                    _ = userInput.Replace(""",""", """.""");
-                    if (userInput.IndexOf('.') == 1)
-                    {
-                        _ = userInput.Insert(0, """0""");
-                    }
-
-                    if (userInput.LastIndexOf('.') == 4)
-                    {
-                        _ = userInput.Insert(3, """0""");
-                    }
-
-                    if (userInput.Length == 10 && userInput.Count(f => f == '.') == 2)
-                    {
-                        isVaild = true;
-                    }
+                    return datumHeute;
+                }
+                FormatDate(userInput);
+                if (userInput.Length == 10 && userInput.Count(f => f == '.') == 2)
+                {
+                    isVaild = true;
+                    return userInput;
                 }
             }
 
-            return userInput; // 00.00.0000
+            return "Error";
+        }
+
+        public static string FormatDate(string input)
+        {
+            input = input.Replace(',', '.');
+            if (input.IndexOf('.') == 1)
+            {
+                input = input.Insert(0, "0");
+            }
+            if (input.LastIndexOf('.') == 4)
+            {
+                input = input.Insert(3, "0");
+            }
+            if (input.Length == 10 && input.Count(f => f == '.') == 2)
+            {
+                return input;
+            }
+
+            return "Error";
         }
 
         public static float GetBetragInput()
         {
-            string? betragInput;
-            float betragValue = -1.0f;
             bool isVaild = false;
             while (!isVaild)
             {
                 Console.Write("""Betrag: """);
-                betragInput = Console.ReadLine();
+                string betragInput = Console.ReadLine();
                 _ = betragInput.Replace(',', '.');
-                if (float.TryParse(betragInput, out betragValue))
+                if (float.TryParse(betragInput, out float betragValue))
                 {
                     if (betragValue > 0.0f)
                     {
-                        isVaild = true;
+                        return betragValue;
                     }
                 }
             }
 
-            return betragValue;
+            return -1.0f;
         }
 
         public static string GetGeschäftInput()
         {
-            string GeschäftInput = "";
             bool isVaild = false;
             while (!isVaild)
             {
                 Console.Write("""Geschäft: """);
-                GeschäftInput = Console.ReadLine();
-                if (!string.IsNullOrEmpty(GeschäftInput) && GeschäftInput.Length > 2)
+                string geschäftInput = Console.ReadLine();
+                if (!string.IsNullOrEmpty(geschäftInput) && geschäftInput.Length > 2)
                 {
-                    isVaild = true;
-                    break;
+                    return geschäftInput;
                 }
             }
 
-            return GeschäftInput;
+            return "Error";
         }
 
         public static bool GetIstAusgabeInput()
         {
-            bool istAusgabe = false;
             bool isValid = false;
-            string userInput = "";
             while (!isValid)
             {
                 Console.WriteLine("""Ausgabe? J/n: """);
-                userInput = Console.ReadLine();
+                string userInput = Console.ReadLine();
                 if (userInput == """J""" || userInput == """j""")
                 {
-                    istAusgabe = true;
-                    isValid = true;
-                    break;
+                    return true;
                 }
                 else if (userInput == """N""" || userInput == """n""")
                 {
-                    istAusgabe = false;
-                    isValid = true;
-                    break;
+                    return false;
                 }
             }
 
-            return istAusgabe;
+            return true;
         }
 
         public static bool GetIstFixInput()
         {
-            bool istFix = false;
             bool isValid = false;
-            string userInput = "";
             while (!isValid)
             {
                 Console.Write("""Zu Fixkosten hinzufügen? J/n: """);
-                userInput = Console.ReadLine();
+                string userInput = Console.ReadLine();
                 if (userInput == """J""" || userInput == """j""")
                 {
-                    istFix = true;
-                    isValid = true;
+                    return true;
                 }
                 else if (userInput == """N""" || userInput == """n""")
                 {
-                    istFix = false;
-                    isValid = true;
+                    return false;
                 }
             }
 
-            return istFix;
+            return false;
         }
 
     }

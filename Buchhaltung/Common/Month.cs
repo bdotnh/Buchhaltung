@@ -1,6 +1,5 @@
 using System;
 using System.Text;
-using System.Text.Encodings.Web;
 using System.Text.Json;
 
 
@@ -63,10 +62,11 @@ namespace Buchhaltung.Common
         public void Show()
         {
             List<Entry> entries = Common.GetEntries(filepath);
-            Console.WriteLine(" ID   |     Datum     |   Betrag  |    Geschäft    | IstAusgabe | IstFix |");
+            Console.WriteLine(" ID   |     Datum     |   Betrag     |    Geschäft    |   IstAusgabe   |   IstFix");
+
             for (int i = 0; i < entries.Count; i++)
             {
-                Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}    |    {entries[i].Geschäft}   |   {entries[i].IstAusgabe}     |   {entries[i].IstFix}");
+                Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}      |      {entries[i].Geschäft}      |    {FormatWasSpended(entries[i].IstAusgabe)}      |   {FormatIsFix(entries[i].IstFix)}");
             }
             ShowTotals();
         }
@@ -74,6 +74,36 @@ namespace Buchhaltung.Common
         private void ShowTotals()
         {
             Console.WriteLine($"Monatsübersicht:\nEinkommen: {moneyIncome} €,     Ausgaben: {moneySpend} €,     Gespart: {moneyLeft} €.");
+        }
+
+        private string FormatWasSpended(bool input)
+        {
+            string res;
+            if (input == true)
+            {
+                res = "Ausgabe";
+            }
+            else
+            {
+                res = "Einnahme";
+            }
+        
+            return res;
+        }
+
+        private string FormatIsFix(bool input)
+        {
+            string res;
+            if (input == true)
+            {
+               res = "Ja"; 
+            } 
+            else
+            {
+                res = "-";
+            }
+            
+            return res;
         }
 
         private void CalculateMonth()
@@ -95,6 +125,10 @@ namespace Buchhaltung.Common
 
         private void LoadEntries()
         {
+            if (string.IsNullOrEmpty(date))
+            {
+                date = Common.GetCurrentMonth();
+            }
             filepath = Directory.GetCurrentDirectory() + "/Src/" + date + "_data.json";
             entries = Common.GetEntries(filepath);
             if (entries.Count < 1)

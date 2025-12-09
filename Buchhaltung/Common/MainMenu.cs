@@ -1,5 +1,4 @@
 using System;
-using System.Net.Http.Headers;
 
 namespace Buchhaltung.Common
 {
@@ -36,7 +35,7 @@ namespace Buchhaltung.Common
                 {
                     if (menuChoice == (int)EMenu.NewEntry)
                     {
-                        /* Dictionary<string, object> inputs = Entry.GetInputs();
+                        Dictionary<string, object> inputs = Entry.GetInputs();
                         Entry entry = new Entry(
                             (string)inputs.GetValueOrDefault("Datum"),
                             (float)inputs.GetValueOrDefault("Betrag"),
@@ -44,17 +43,18 @@ namespace Buchhaltung.Common
                             (bool)inputs.GetValueOrDefault("IstAusgabe"),
                             (bool)inputs.GetValueOrDefault("IstFix")
                         );
-                        */
+                        /*
                         string datum = """30.11.2025""";
                         float betrag = 12.34f;
                         string geschäft = """Aldi""";
                         bool istAusgabe = true;
                         bool istFix = true;
-
                         Entry testEntry = new Entry(
                             datum, betrag, geschäft, istAusgabe, istFix
                         );
                         Entry.Save(Common.currMonthFilepath, testEntry);
+                        */
+                        Entry.Save(Common.CurrMonthFilepath, entry);
                         menuChoice = -1;
                     }
                     else if (menuChoice == (int)EMenu.Month)
