@@ -1,0 +1,16 @@
+[
+  {
+    "Datum": "12.10.2025",
+    "Betrag": 12.34,
+    "Geschäft": "Test",
+    "IstAusgabe": true,
+    "IstFix": true
+  },
+  {
+    "Datum": "12.10.2025",
+    "Betrag": 1.12,
+    "Geschäft": "TestK2",
+    "IstAusgabe": true,
+    "IstFix": true
+  }
+]

@@ -144,12 +144,16 @@ namespace Buchhaltung.Common
             {
                 Console.Write("""Betrag: """);
                 string betragInput = Console.ReadLine();
-                _ = betragInput.Replace(',', '.');
+                betragInput = betragInput.Replace(',', '.');
                 if (float.TryParse(betragInput, out float betragValue))
                 {
-                    if (betragValue > 0.0f)
+                    if (betragValue > 0.0)
                     {
                         return betragValue;
+                    }
+                    else
+                    {
+                        return Math.Abs(betragValue);
                     }
                 }
             }
@@ -212,6 +216,5 @@ namespace Buchhaltung.Common
 
             return false;
         }
-
     }
 }

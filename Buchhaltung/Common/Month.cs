@@ -58,7 +58,7 @@ namespace Buchhaltung.Common
 
         public void Show()
         {
-            Console.WriteLine(" ID   |     Datum     |   Betrag     |    Geschäft    |   IstAusgabe   |   IstFix");
+            Console.WriteLine(" ID   |     Datum     |   Betrag     |    Geschäft    |   Ein-/Ausgabe   |   IstFix");
             for (int i = 0; i < entries.Count; i++)
             {
                 Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}      |      {entries[i].Geschäft}      |    {FormatWasSpended(entries[i].IstAusgabe)}      |   {FormatIsFix(entries[i].IstFix)}");
@@ -68,10 +68,10 @@ namespace Buchhaltung.Common
 
         private void ShowTotals()
         {
-            Console.WriteLine($"Monatsübersicht:\nEinkommen: {moneyIncome} €,     Ausgaben: {moneySpend} €,     Gespart: {moneyLeft} €.");
+            Console.WriteLine($"Einkommen: {moneyIncome} €,     Ausgaben: {moneySpend} €,     Gespart: {moneyLeft} €.");
         }
 
-        private string FormatWasSpended(bool input)
+        public static string FormatWasSpended(bool input)
         {
             string res;
             if (input == true)
@@ -86,7 +86,7 @@ namespace Buchhaltung.Common
             return res;
         }
 
-        private string FormatIsFix(bool input)
+        public static string FormatIsFix(bool input)
         {
             string res;
             if (input == true)
@@ -103,6 +103,8 @@ namespace Buchhaltung.Common
 
         private void CalculateMonth()
         {
+            moneySpend = 0.0f;
+            moneyIncome = 0.0f;
             for (int i = 0; i < entries.Count; i++)
             {
                 if (entries[i].IstAusgabe)

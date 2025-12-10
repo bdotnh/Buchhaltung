@@ -19,5 +19,12 @@
     "Geschäft": "Aldi",
     "IstAusgabe": true,
     "IstFix": false
+  },
+  {
+    "Datum": "12.10.2025",
+    "Betrag": 5.12,
+    "Geschäft": "Test",
+    "IstAusgabe": true,
+    "IstFix": true
   }
 ]

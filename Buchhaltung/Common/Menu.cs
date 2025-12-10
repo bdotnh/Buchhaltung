@@ -66,7 +66,7 @@ namespace Buchhaltung.Common
                 if (menuChoice == (int)EMonthMenu.ChangeMonth)
                 {
                     newDate = User.GetMonthInput("Monat: ");
-                    month = new Month(newDate);
+                    new Month(newDate).Show();
                 }
                 else if (menuChoice == (int)EMonthMenu.DeleteEntry)
                 {
@@ -80,6 +80,7 @@ namespace Buchhaltung.Common
 
         private static void FixCostMenu()
         {
+            FixCost fixCost = new();
             string message = "Eingabe: ";
             int menuChoice = User.GetInputNumber(message);
             if (menuChoice == (int)EFixMenu.Exit)
