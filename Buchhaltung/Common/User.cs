@@ -1,5 +1,4 @@
 using System;
-using Utf8Json.Formatters;
 
 namespace Buchhaltung.Common
 {
@@ -62,7 +61,6 @@ namespace Buchhaltung.Common
                 allSavedMonths.Add(month);
             }
 
-            string userInput = "";
             bool isValid = false;
             while (!isValid)
             {
@@ -73,10 +71,10 @@ namespace Buchhaltung.Common
                 }
 
                 Console.WriteLine(message);
-                userInput = Console.ReadLine();
+                string userInput = Console.ReadLine();
                 if (allSavedMonths.Contains(userInput))
                 {
-                    isValid = true;
+                    return userInput;
                 }
                 else
                 {
@@ -84,7 +82,7 @@ namespace Buchhaltung.Common
                 }
             }
 
-            return userInput;
+            return "Error";
         }
 
         public static void ClearCurrentConsoleLine()

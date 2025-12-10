@@ -1,12 +1,21 @@
 {
   "version": 2,
-  "dgSpecHash": "gO1xPniQ1DnP4WLEEAT8CicW25F7+kb2scJCIqXV8kMGgiWBgO1RHE9HEyNGZlb0akM9eQt5A4CoeVIfRo35Eg==",
+  "dgSpecHash": "5jXI9rMpVSlmf6976XNqiLF/L2bZNKyO9Ea1OlWwmPeYs2UojKMZNMtu20c7a12+lNlydY+wGjLOON3l5w4izQ==",
   "success": true,
   "projectFilePath": "/home/ben/cs_workspace/Buchhaltung/Buchhaltung/Buchhaltung.csproj",
   "expectedPackageFiles": [
     "/home/ben/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "/home/ben/.nuget/packages/microsoft.netcore.targets/1.1.0/microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "/home/ben/.nuget/packages/runtime.any.system.io/4.3.0/runtime.any.system.io.4.3.0.nupkg.sha512",
+    "/home/ben/.nuget/packages/runtime.any.system.reflection/4.3.0/runtime.any.system.reflection.4.3.0.nupkg.sha512",
+    "/home/ben/.nuget/packages/runtime.any.system.reflection.primitives/4.3.0/runtime.any.system.reflection.primitives.4.3.0.nupkg.sha512",
+    "/home/ben/.nuget/packages/runtime.any.system.runtime/4.3.0/runtime.any.system.runtime.4.3.0.nupkg.sha512",
+    "/home/ben/.nuget/packages/runtime.any.system.text.encoding/4.3.0/runtime.any.system.text.encoding.4.3.0.nupkg.sha512",
+    "/home/ben/.nuget/packages/runtime.any.system.threading.tasks/4.3.0/runtime.any.system.threading.tasks.4.3.0.nupkg.sha512",
+    "/home/ben/.nuget/packages/runtime.native.system/4.3.0/runtime.native.system.4.3.0.nupkg.sha512",
+    "/home/ben/.nuget/packages/runtime.unix.system.private.uri/4.3.0/runtime.unix.system.private.uri.4.3.0.nupkg.sha512",
     "/home/ben/.nuget/packages/system.io/4.3.0/system.io.4.3.0.nupkg.sha512",
+    "/home/ben/.nuget/packages/system.private.uri/4.3.0/system.private.uri.4.3.0.nupkg.sha512",
     "/home/ben/.nuget/packages/system.reflection/4.3.0/system.reflection.4.3.0.nupkg.sha512",
     "/home/ben/.nuget/packages/system.reflection.emit/4.3.0/system.reflection.emit.4.3.0.nupkg.sha512",
     "/home/ben/.nuget/packages/system.reflection.emit.ilgeneration/4.3.0/system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512",
@@ -17,7 +26,10 @@
     "/home/ben/.nuget/packages/system.threading.tasks/4.3.0/system.threading.tasks.4.3.0.nupkg.sha512",
     "/home/ben/.nuget/packages/system.threading.tasks.extensions/4.4.0/system.threading.tasks.extensions.4.4.0.nupkg.sha512",
     "/home/ben/.nuget/packages/system.valuetuple/4.4.0/system.valuetuple.4.4.0.nupkg.sha512",
-    "/home/ben/.nuget/packages/utf8json/1.3.7/utf8json.1.3.7.nupkg.sha512"
+    "/home/ben/.nuget/packages/utf8json/1.3.7/utf8json.1.3.7.nupkg.sha512",
+    "/home/ben/.nuget/packages/microsoft.netcore.app.runtime.linux-x64/8.0.22/microsoft.netcore.app.runtime.linux-x64.8.0.22.nupkg.sha512",
+    "/home/ben/.nuget/packages/microsoft.aspnetcore.app.runtime.linux-x64/8.0.22/microsoft.aspnetcore.app.runtime.linux-x64.8.0.22.nupkg.sha512",
+    "/home/ben/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.22/microsoft.netcore.app.host.linux-x64.8.0.22.nupkg.sha512"
   ],
   "logs": []
 }

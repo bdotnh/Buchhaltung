@@ -24,22 +24,22 @@ namespace Buchhaltung.Common
             IstFix = istFix;
         }
 
-        public static void Save(string filePath, Entry entry)
-        {
+        public static void Save(string filepath, Entry entry)
+        { 
             var options = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 WriteIndented = true
             };
 
-            if (File.Exists(filePath) && File.ReadAllLines(filePath).Length > 1)
+            if (File.Exists(filepath) && File.ReadAllLines(filepath).Length > 1)
             {
-                var jsonData = File.ReadAllText(filePath);
+                var jsonData = File.ReadAllText(filepath);
                 var entryList = JsonSerializer.Deserialize<List<Entry>>(jsonData)
                                 ?? new List<Entry>();
                 entryList.Add(entry);
                 jsonData = JsonSerializer.Serialize(entryList, options);
-                File.WriteAllText(filePath, jsonData, new UTF8Encoding());
+                File.WriteAllText(filepath, jsonData, new UTF8Encoding());
             }
             else
             {
@@ -48,7 +48,7 @@ namespace Buchhaltung.Common
                     entry
                 };
                 string jsonData = JsonSerializer.Serialize(entryList, options);
-                File.WriteAllText(filePath, jsonData, new UTF8Encoding());
+                File.WriteAllText(filepath, jsonData, new UTF8Encoding());
             }
             Console.WriteLine("""Eintrag wurde gespeichert.""");
             

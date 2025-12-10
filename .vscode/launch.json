@@ -5,7 +5,7 @@
         "type": "coreclr",
         "request": "launch",
         "preLaunchTask": "build",
-        "program": "${workspaceFolder}/Buchhaltung/bin/Debug/net8.0/Buchhaltung.dll",
+        "program": "${workspaceFolder}/Buchhaltung/bin/Debug/net8.0/linux-x64/Buchhaltung.dll",
         "args": [
         ],
         "cwd": "${workspaceFolder}",
@@ -13,5 +13,4 @@
         "console": "externalTerminal"
     }
     ]
-
 }

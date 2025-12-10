@@ -31,18 +31,27 @@ namespace Buchhaltung.Common
             return allFilenames;
         }
 
-        public static List<Entry> GetEntries(string filePath)
+        public static List<Entry> GetEntries(string filepath)
         {
-            if (!File.Exists(filePath))
+            List<Entry> entries = new();
+            string jsonData = "";
+            if (File.Exists(filepath))
             {
-                Console.WriteLine($"Error: Cant GetEntries from path({filePath})!");
-                return [];
+                try
+                {
+                    jsonData = File.ReadAllText(filepath);
+                    if (!string.IsNullOrEmpty(jsonData))
+                    {
+                        entries = JsonSerializer.Deserialize<List<Entry>>(jsonData);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error: {e.Message}");
+                }
             }
-            var jsonData = File.ReadAllText(filePath);
-            var entryList = JsonSerializer.Deserialize<List<Entry>>(jsonData)
-                             ?? new List<Entry>();
 
-            return entryList;
+            return entries;
         }
 
         public static string GetCurrentMonth()

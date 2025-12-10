@@ -9,7 +9,6 @@ namespace Buchhaltung.Common
 {
     public class FixCost
     {
-        public static int fixCount = 0;
         private static float fixMoneySpend = 0.0f;
         private static float fixMoneyEarned = 0.0f;
         private static float moneyLeft = 0.0f;
@@ -23,9 +22,15 @@ namespace Buchhaltung.Common
 
         public FixCost()
         {
-            LoadEntries();
-            Show();
-            Menu menu = new Menu(3);
+            if (File.Exists(filepath) && File.ReadAllLines(filepath).Length > 1)
+            {
+                LoadEntries();
+                CalculateFixCosts();
+            }
+            else
+            {
+                Console.WriteLine("Es sind noch keine Fix-Kosten gespeichert.");
+            }
         }
 
         public static void DeleteEntry(Entry entry)
@@ -83,21 +88,23 @@ namespace Buchhaltung.Common
             }
         }
 
-        public static void Show()
+        public void Show()
         {
-            fixCount = entries.Count;
-            Console.WriteLine(""" ID   |     Datum     |   Betrag  |    Geschäft    | IstAusgabe | IstFix |""");
-            for (int i = 0; i < fixCount; i++)
+            if (File.Exists(filepath))
             {
-                Console.WriteLine($""" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}    |    {entries[i].Geschäft}   |   {entries[i].IstAusgabe}     |   {entries[i].IstFix}""");
-            }
-            if (moneyLeft > 0.0f)
-            {
-                Console.WriteLine($"Überblick der Fixkosten:\nGesamt-Einkommen: {fixMoneyEarned} €,      Ausgaben: {fixMoneySpend} €,   Einkommen abzüglich Fixkosten: {moneyLeft} € .");
-            }
-            else
-            {
-                Console.WriteLine($"""Feste monatliche Ausgaben: {fixMoneySpend} €.""");
+                Console.WriteLine(""" ID   |     Datum     |   Betrag  |    Geschäft    | IstAusgabe | IstFix |""");
+                for (int i = 0; i < entries.Count; i++)
+                {
+                    Console.WriteLine($""" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}    |    {entries[i].Geschäft}   |   {entries[i].IstAusgabe}     |   {entries[i].IstFix}""");
+                }
+                if (moneyLeft > 0.0f)
+                {
+                    Console.WriteLine($"Überblick der Fixkosten:\nGesamt-Einkommen: {fixMoneyEarned} €,      Ausgaben: {fixMoneySpend} €,   Einkommen abzüglich Fixkosten: {moneyLeft} € .");
+                }
+                else
+                {
+                    Console.WriteLine($"""Feste monatliche Ausgaben: {fixMoneySpend} €.""");
+                }
             }
         }
 
@@ -122,12 +129,18 @@ namespace Buchhaltung.Common
 
         private static void LoadEntries()
         {
-            entries = Common.GetEntries(filepath);
-            if (entries.Count < 1)
+            if (File.Exists(filepath))
             {
-                Console.WriteLine("""Error: Es wurden keine gespeicherten Fixkosten gefunden!""");
+                try
+                {
+                    entries = Common.GetEntries(filepath);
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine(e.Message);
+                }
             }
-            CalculateFixCosts();
         }
     }
 }

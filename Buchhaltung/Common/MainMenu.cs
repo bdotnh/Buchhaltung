@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Buchhaltung.Common
 {
@@ -59,13 +60,13 @@ namespace Buchhaltung.Common
                     }
                     else if (menuChoice == (int)EMenu.Month)
                     {
-                        Month currentMonth = new Month("");
-                        currentMonth.Show();
-                        _ = new Menu(2);
+                        new Month("").Show();
+                        new Menu((int)EMenu.Month);
                     }
                     else if (menuChoice == (int)EMenu.FixCosts)
                     {
-                        _ = new FixCost();
+                        new FixCost().Show();
+                        new Menu((int)EMenu.FixCosts);
                     }
                     else if (menuChoice == (int)EMenu.MonthComparison)
                     {

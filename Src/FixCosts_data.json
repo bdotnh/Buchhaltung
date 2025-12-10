@@ -1,14 +1,14 @@
 [
   {
-    "Datum": "30.11.2025",
-    "Betrag": 12.34,
+    "Datum": "12.10.2025",
+    "Betrag": 1.1,
     "Geschäft": "Aldi",
     "IstAusgabe": true,
     "IstFix": true
   },
   {
-    "Datum": "30.11.2025",
-    "Betrag": 12.34,
+    "Datum": "12.10.2025",
+    "Betrag": 2.2,
     "Geschäft": "Aldi",
     "IstAusgabe": true,
     "IstFix": true

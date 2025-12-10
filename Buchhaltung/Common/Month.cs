@@ -11,9 +11,9 @@ namespace Buchhaltung.Common
         public string Date { get => date; }
         private float moneyIncome { get; set; }
         public float MoneyIncome { get => moneyIncome; }
-        private float moneySpend { get; set; } 
+        private float moneySpend { get; set; }
         public float MoneySpend { get => moneySpend; }
-        private float moneyLeft { get; set; } 
+        private float moneyLeft { get; set; }
         public float MoneyLeft { get => moneyLeft; }
         private List<Entry> entries = new List<Entry>();
         public int EntryCount { get => entries.Count; }
@@ -21,23 +21,26 @@ namespace Buchhaltung.Common
 
         public Month(string Date)
         {
-            date = Date;
-            LoadEntries();
-            CalculateMonth();
+            if (string.IsNullOrEmpty(date))
+            {
+                date = Common.GetCurrentMonth();
+            }
+            filepath = Directory.GetCurrentDirectory() + "/Src/" + date + "_data.json";
+            if (File.Exists(filepath))
+            {
+                LoadEntries();
+                CalculateMonth();
+            }
+            else
+            {
+                Console.WriteLine($"Monat: {Date} ist leer.");
+            }
         }
 
         public void DeleteEntry(Entry entry)
         {
             entries.Remove(entry);
-            if (SaveAllEntries() == 0)
-            {
-                Console.WriteLine("Fixkosten-Eintrag wurde erfolgreich gelöscht.");
-
-            }
-            else
-            {
-                Console.WriteLine("Error: Fehler beim löschen des Fixkosten-Eintrags!");
-            }
+            SaveEntries(); 
         }
 
         public Entry SelectEntry(int number)
@@ -47,23 +50,15 @@ namespace Buchhaltung.Common
             return selectedEntry;
         }
 
-        public int SaveAllEntries()
+        public void SaveEntries()
         {
-            if (!File.Exists(filepath))
-            {
-                return -1;
-            }
             var jsonData = JsonSerializer.Serialize(entries, Common.JsonOptions);
             File.WriteAllText(filepath, jsonData, new UTF8Encoding());
-
-            return 0;
         }
 
         public void Show()
         {
-            List<Entry> entries = Common.GetEntries(filepath);
             Console.WriteLine(" ID   |     Datum     |   Betrag     |    Geschäft    |   IstAusgabe   |   IstFix");
-
             for (int i = 0; i < entries.Count; i++)
             {
                 Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}      |      {entries[i].Geschäft}      |    {FormatWasSpended(entries[i].IstAusgabe)}      |   {FormatIsFix(entries[i].IstFix)}");
@@ -87,7 +82,7 @@ namespace Buchhaltung.Common
             {
                 res = "Einnahme";
             }
-        
+
             return res;
         }
 
@@ -96,13 +91,13 @@ namespace Buchhaltung.Common
             string res;
             if (input == true)
             {
-               res = "Ja"; 
-            } 
+                res = "Ja";
+            }
             else
             {
                 res = "-";
             }
-            
+
             return res;
         }
 
@@ -125,15 +120,20 @@ namespace Buchhaltung.Common
 
         private void LoadEntries()
         {
-            if (string.IsNullOrEmpty(date))
+            if (File.Exists(filepath))
             {
-                date = Common.GetCurrentMonth();
-            }
-            filepath = Directory.GetCurrentDirectory() + "/Src/" + date + "_data.json";
-            entries = Common.GetEntries(filepath);
-            if (entries.Count < 1)
-            {
-                Console.WriteLine("Error: Es wurden keine gespeicherten Einträge gefunden!");
+                try
+                {
+                    entries = Common.GetEntries(filepath);
+                    if (entries.Count < 1)
+                    {
+                        Console.WriteLine("Error: Es wurden keine gespeicherten Einträge gefunden!");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error: {e.Message}");
+                }
             }
 
         }
