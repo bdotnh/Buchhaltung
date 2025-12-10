@@ -6,7 +6,7 @@ namespace Buchhaltung.Common
     {
         Exit = 0,
         ChangeMonth,
-        DeleteEntry,
+        DeleteEntries,
     }
     public enum EFixMenu
     {
@@ -25,12 +25,12 @@ namespace Buchhaltung.Common
 
         private string[] promptMonthMenu =
         [
-            "Exit", "Monat ändern", "Eintrag löschen"
+            "Exit", "Monat ändern", "Einträge löschen"
         ];
 
         private string[] promptFixMenu =
         [
-            "Exit", "Fixkosten-Eintrag löschen"
+            "Exit", "Fixkosten-Einträge löschen"
         ];
 
         private string[] promptMonthComparisonMenu =
@@ -40,7 +40,7 @@ namespace Buchhaltung.Common
 
         public Menu(int menu)
         {
-            InitMenu(menu);
+            InitMenuPrompt(menu);
             if (menu == (int)EMenu.Month)
             {
                 MonthMenu();
@@ -68,12 +68,12 @@ namespace Buchhaltung.Common
                     newDate = User.GetMonthInput("Monat: ");
                     new Month(newDate).Show();
                 }
-                else if (menuChoice == (int)EMonthMenu.DeleteEntry)
+                else if (menuChoice == (int)EMonthMenu.DeleteEntries)
                 {
                     month = new Month(newDate);
-                    int entryChoice = GetEntryChoice(month);
-                    Entry entry = month.SelectEntry(entryChoice);
-                    month.DeleteEntry(entry);
+                    List<int> entryChoice = User.GetInputNumbers("Zum löschen mehrerer Einträge Nummer mit ',' trennen:");
+                    List<Entry> entry = month.SelectEntries(entryChoice);
+                    month.DeleteEntries(entry);
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace Buchhaltung.Common
             }
         }
 
-        private static int GetEntryChoice(Month month)
+        private static int GetEntryChoices(Month month)
         {
             if (month.EntryCount == 0)
             {
@@ -128,7 +128,7 @@ namespace Buchhaltung.Common
             }
         }
 
-        private void InitMenu(int menu)
+        private void InitMenuPrompt(int menu)
         {
             if (menu == (int)EMenu.NewEntry)
             {
@@ -141,6 +141,10 @@ namespace Buchhaltung.Common
             else if (menu == (int)EMenu.FixCosts)
             {
                 ShowPrompts(promptFixMenu);
+            }
+            else if (menu == (int)EMenu.MonthComparison)
+            {
+                ShowPrompts(promptMonthComparisonMenu);
             }
         }
     }

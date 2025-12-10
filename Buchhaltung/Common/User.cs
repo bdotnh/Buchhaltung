@@ -27,9 +27,36 @@ namespace Buchhaltung.Common
             return false;
         }
 
+        public static List<int> GetInputNumbers(string message)
+        {
+            List<int> nums = [];
+            string userInput = "";
+            while (string.IsNullOrEmpty(userInput))
+            {
+                Console.WriteLine(message);
+                userInput = Console.ReadLine();
+                if (userInput.Contains(","))
+                {
+                    string[] split = userInput.Split(",");
+                    foreach (string strSplit in split)
+                    {
+                        if (int.TryParse(strSplit, out int num))
+                        {
+                            nums.Add(num);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Nummer: {strSplit} wurde nicht korrekt erfasst.");
+                        }
+                    }
+                }
+            }
+            return nums;
+        }
+
         public static int GetInputNumber(string message)
         {
-            int menuChioce = -1;
+            int menuChoice = -1;
             string userInput = "";
             while (string.IsNullOrEmpty(userInput))
             {
@@ -37,15 +64,15 @@ namespace Buchhaltung.Common
                 userInput = Console.ReadLine();
                 if (int.TryParse(userInput, out int temp))
                 {
-                    menuChioce = temp;
+                    menuChoice = temp;
                 }
             }
-            if (menuChioce < 0)
+            if (menuChoice < 0)
             {
                 Console.WriteLine("""Ups! Bei der Eingabe ist etwas schiefgelaufen.""");
             }
 
-            return menuChioce;
+            return menuChoice;
         }
 
         public static string GetMonthInput(string message)
@@ -101,13 +128,17 @@ namespace Buchhaltung.Common
             {
                 string datumHeute = DateOnly.FromDateTime(DateTime.Now).ToString().Replace('/', '.');
                 datumHeute = FormatDate(datumHeute);
-                Console.WriteLine($"Datum: {datumHeute} ( Für heutiges Datum 'Enter' drücken )");
+                Console.WriteLine($"Datum: {datumHeute} ( Für heutiges Datum 'Enter' drücken ). Exit = 0");
                 string userInput = Console.ReadLine();
                 if (userInput == "")
                 {
                     return datumHeute;
                 }
-                FormatDate(userInput);
+                if (userInput == "0")
+                {
+                    new MainMenu();
+                }
+                userInput = FormatDate(userInput);
                 if (userInput.Length == 10 && userInput.Count(f => f == '.') == 2)
                 {
                     isVaild = true;

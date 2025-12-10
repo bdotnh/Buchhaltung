@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Utf8Json.Formatters;
 
 namespace Buchhaltung.Common
 {
@@ -13,7 +14,7 @@ namespace Buchhaltung.Common
         private string[] promptMainMenu =
         [
             """Exit""",
-            """Neuer Eintrag""",
+            """Neue Einträge""",
             """Monats-Übersicht""",
             """Fix Kosten""",
             """Monats-Vergleich"""
@@ -34,7 +35,7 @@ namespace Buchhaltung.Common
                 }
                 else
                 {
-                    if (menuChoice == (int)EMenu.NewEntry)
+                    while (menuChoice == (int)EMenu.NewEntry)
                     {
                         Dictionary<string, object> inputs = Entry.GetInputs();
                         Entry entry = new Entry(
@@ -56,9 +57,8 @@ namespace Buchhaltung.Common
                         Entry.Save(Common.currMonthFilepath, testEntry);
                         */
                         Entry.Save(Common.CurrMonthFilepath, entry);
-                        menuChoice = -1;
                     }
-                    else if (menuChoice == (int)EMenu.Month)
+                    if (menuChoice == (int)EMenu.Month)
                     {
                         new Month("").Show();
                         new Menu((int)EMenu.Month);
@@ -77,6 +77,7 @@ namespace Buchhaltung.Common
                        
                         MonthComparison monthComparison = new (monthDate1, monthDate2); 
                         monthComparison.ShowDiffs();
+                        new Menu((int)EMenu.MonthComparison);
                     }
                 }
             }

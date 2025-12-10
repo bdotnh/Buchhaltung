@@ -1,30 +1,114 @@
 [
   {
-    "Datum": "12.10.2025",
-    "Betrag": 1.1,
-    "Geschäft": "Aldi",
-    "IstAusgabe": true,
+    "Datum": "28.11.2025",
+    "Betrag": 494.85,
+    "Geschäft": "BA/JC",
+    "IstAusgabe": false,
     "IstFix": true
   },
   {
-    "Datum": "12.10.2025",
-    "Betrag": 2.2,
-    "Geschäft": "Aldi",
+    "Datum": "01.12.2025",
+    "Betrag": 39.9,
+    "Geschäft": "RSG Group GmbH (McFit)",
     "IstAusgabe": true,
-    "IstFix": true
+    "IstFix": false
   },
   {
-    "Datum": "12.10.2025",
-    "Betrag": 3.3,
+    "Datum": "01.12.2025",
+    "Betrag": 4.99,
+    "Geschäft": "Paypal (Steam)",
+    "IstAusgabe": true,
+    "IstFix": false
+  },
+  {
+    "Datum": "01.12.2025",
+    "Betrag": 17.47,
     "Geschäft": "Aldi",
     "IstAusgabe": true,
     "IstFix": false
   },
   {
-    "Datum": "12.10.2025",
-    "Betrag": 5.12,
-    "Geschäft": "Test",
+    "Datum": "01.12.2025",
+    "Betrag": 8.04,
+    "Geschäft": "Edeka",
     "IstAusgabe": true,
-    "IstFix": true
+    "IstFix": false
+  },
+  {
+    "Datum": "02.12.2025",
+    "Betrag": 0.99,
+    "Geschäft": "Paypal (Apple)",
+    "IstAusgabe": true,
+    "IstFix": false
+  },
+  {
+    "Datum": "02.12.2025",
+    "Betrag": 16.87,
+    "Geschäft": "Rewe",
+    "IstAusgabe": true,
+    "IstFix": false
+  },
+  {
+    "Datum": "04.12.2025",
+    "Betrag": 8.99,
+    "Geschäft": "Amazon",
+    "IstAusgabe": true,
+    "IstFix": false
+  },
+  {
+    "Datum": "04.12.2025",
+    "Betrag": 47.1,
+    "Geschäft": "Aldi",
+    "IstAusgabe": true,
+    "IstFix": false
+  },
+  {
+    "Datum": "08.12.2025",
+    "Betrag": 16.17,
+    "Geschäft": "Aldi",
+    "IstAusgabe": true,
+    "IstFix": false
+  },
+  {
+    "Datum": "09.12.2025",
+    "Betrag": 14.45,
+    "Geschäft": "Aldi",
+    "IstAusgabe": true,
+    "IstFix": false
+  },
+  {
+    "Datum": "10.12.2025",
+    "Betrag": 4.99,
+    "Geschäft": "PayPal (Netflix)",
+    "IstAusgabe": true,
+    "IstFix": false
+  },
+  {
+    "Datum": "10.12.2025",
+    "Betrag": 64.79,
+    "Geschäft": "Aldi + Bargeld",
+    "IstAusgabe": true,
+    "IstFix": false
+  },
+  {
+    "Datum": "12.10.2025",
+    "Betrag": 2,
+    "Geschäft": "test",
+    "IstAusgabe": true,
+    "IstFix": false
+  },
+  {
+    "Datum": "12.10.2025",
+    "Betrag": 1,
+    "Geschäft": "gsl",
+    "IstAusgabe": true,
+    "IstFix": false
+  },
+  {
+    "Datum": "12.10.2025",
+    "Betrag": 1,
+    "Geschäft": "awe",
+    "IstAusgabe": true,
+    "IstFix": false
   }
 ]

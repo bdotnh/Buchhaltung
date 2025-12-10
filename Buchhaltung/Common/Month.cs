@@ -37,17 +37,24 @@ namespace Buchhaltung.Common
             }
         }
 
-        public void DeleteEntry(Entry entry)
+        public void DeleteEntries(List<Entry> list)
         {
-            entries.Remove(entry);
+            for (int i = 0; i < list.Count; i++)
+            {
+                entries.Remove(list[i]);
+            }
             SaveEntries(); 
         }
 
-        public Entry SelectEntry(int number)
+        public List<Entry> SelectEntries(List<int> numbers)
         {
-            Entry selectedEntry = entries[number];
-
-            return selectedEntry;
+            List<Entry> list = new();
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                list.Add(entries[numbers[i]]);
+            }
+            
+            return list;
         }
 
         public void SaveEntries()
