@@ -71,9 +71,9 @@ namespace Buchhaltung.Common
                 else if (menuChoice == (int)EMonthMenu.DeleteEntries)
                 {
                     month = new Month(newDate);
-                    List<int> entryChoice = User.GetInputNumbers("Zum löschen mehrerer Einträge Nummer mit ',' trennen:");
-                    List<Entry> entry = month.SelectEntries(entryChoice);
-                    month.DeleteEntries(entry);
+                    List<int> entryChoices = User.GetNumsInput("Zum löschen mehrerer Einträge Nummer mit ',' trennen: ");
+                    List<Entry> entries = month.SelectEntries(entryChoices);
+                    month.DeleteEntries(entries);
                 }
             }
         }
@@ -91,24 +91,12 @@ namespace Buchhaltung.Common
             {
                 if (menuChoice == (int)EFixMenu.DeleteEntry)
                 {
-                    int fixCostChoice = GetFixCostChoice();
-                    Entry entry = FixCost.SelectEntry(fixCostChoice);
-                    FixCost.DeleteEntry(entry);
+
+                    List<int> entryChoices = User.GetNumsInput("Zum löschen mehrerer Einträge Nummer mit ',' trennen: ");
+                    List<Entry> entries = fixCost.SelectEntries(entryChoices);
+                    fixCost.DeleteEntries(entries); 
                 }
             }
-        }
-
-        private static int GetEntryChoices(Month month)
-        {
-            if (month.EntryCount == 0)
-            {
-                Console.WriteLine($"Keine Einträge im ausgewähltem Monat vorhanden.");
-                return -1;
-            }
-            string message = "Zum löschen eines Eintrags bitte Nummer eingeben: ";
-            int userChoice = User.GetInputNumber(message);
-
-            return userChoice;
         }
 
         private static int GetFixCostChoice()

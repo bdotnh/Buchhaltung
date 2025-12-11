@@ -91,24 +91,17 @@
     "IstFix": false
   },
   {
-    "Datum": "12.10.2025",
-    "Betrag": 2,
-    "Geschäft": "test",
+    "Datum": "12.11.2025",
+    "Betrag": 4.32,
+    "Geschäft": "TestFIx",
     "IstAusgabe": true,
-    "IstFix": false
+    "IstFix": true
   },
   {
-    "Datum": "12.10.2025",
-    "Betrag": 1,
-    "Geschäft": "gsl",
+    "Datum": "12.11.2025",
+    "Betrag": 103,
+    "Geschäft": "TestFix2",
     "IstAusgabe": true,
-    "IstFix": false
-  },
-  {
-    "Datum": "12.10.2025",
-    "Betrag": 1,
-    "Geschäft": "awe",
-    "IstAusgabe": true,
-    "IstFix": false
+    "IstFix": true
   }
 ]

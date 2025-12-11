@@ -27,7 +27,7 @@ namespace Buchhaltung.Common
             return false;
         }
 
-        public static List<int> GetInputNumbers(string message)
+        public static List<int> GetNumsInput(string message)
         {
             List<int> nums = [];
             string userInput = "";

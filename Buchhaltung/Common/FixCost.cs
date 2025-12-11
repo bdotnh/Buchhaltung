@@ -28,28 +28,35 @@ namespace Buchhaltung.Common
             CalculateTotals();
         }
 
-        public static void DeleteEntry(Entry entry)
+        public void DeleteEntries(List<Entry> list)
         {
-            entries.Remove(entry);
-            if (SaveAllEntries() == 0)
+            if (list.Count == 0 && entries.Count == 1)
             {
-                Console.WriteLine("Fixkosten-Eintrag wurde erfolgreich gelöscht.");
+                entries = new List<Entry>();
             }
             else
             {
-                Console.WriteLine("Error: Fehler beim löschen des Fixkosten-Eintrags!");
+                for (int i = 0; i < list.Count; i++)
+                {
+                    entries.Remove(list[i]);
+                }
             }
+            SaveEntries();
         }
 
-        public static Entry SelectEntry(int number)
+        public List<Entry> SelectEntries(List<int> nums)
         {
-            Console.WriteLine($"Ausgewählte Nummer: {number}.");
-            Entry selectedEntry = entries[number];
-
-            return selectedEntry;
+            nums.Sort();
+            nums.Reverse();
+            List<Entry> selectedEntries = new();
+            for (int i = 0; i < nums.Count; i++)
+            {
+                selectedEntries.Add(entries[i]);
+            }
+            return selectedEntries;
         }
 
-        public static int SaveAllEntries()
+        public static int SaveEntries()
         {
             if (!File.Exists(filepath))
             {
@@ -74,7 +81,7 @@ namespace Buchhaltung.Common
             }
             else
             {
-                var entryList = new List<Entry>(){ entry };
+                var entryList = new List<Entry>() { entry };
                 string jsonData = JsonSerializer.Serialize(entryList, options);
                 File.WriteAllText(filepath, jsonData, new UTF8Encoding());
             }
