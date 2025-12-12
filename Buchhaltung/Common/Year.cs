@@ -5,12 +5,16 @@ namespace Buchhaltung.Common
     public class Year
     {
         private string date { get; set; }
+        public string Date { get => date; }
         private string[] allFilenames { get; set; }
         private List<string> monthDates = new List<string>();
         private List<Month> loadedMonths = new List<Month>();
-        private float totalIncome;
-        private float totalSpend;
-        private float totalLeft;
+        private float totalIncome { get; set; }
+        public float TotalIncome { get => totalIncome; }
+        private float totalSpend { get; set; }
+        public float TotalSpend { get => totalSpend; }
+        private float totalLeft { get; set; }
+        public float TotalLeft { get => totalLeft; }
         public Year(string dateInput)
         {
             if (string.IsNullOrEmpty(dateInput))

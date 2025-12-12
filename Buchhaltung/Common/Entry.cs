@@ -70,24 +70,28 @@ namespace Buchhaltung.Common
                 Console.WriteLine($"""Fehler beim speichern des Datums: {datum}!""");
             }
             float betrag = User.GetBetragInput();
-            if (!Inputs.TryAdd("""Betrag""", betrag))
-            {
-                Console.WriteLine($"""Fehler beim speichern des Betrags: {betrag}!""");
-            }
             string geschäft = User.GetGeschäftInput();
             if (!Inputs.TryAdd("""Geschäft""", geschäft))
             {
-                Console.WriteLine($"""Fehler beim speichern des Datums: {geschäft}!""");
+                Console.WriteLine($"""Fehler beim speichern des Geschäfts: {geschäft}!""");
             }
             bool istAusgabe = User.GetIstAusgabeInput();
             if (!Inputs.TryAdd("""IstAusgabe""", istAusgabe))
             {
-                Console.WriteLine($"""Fehler beim speichern des Datums: {istAusgabe}!""");
+                Console.WriteLine($"""Fehler beim speichern ist Ausgabe: {istAusgabe}!""");
+            }
+            if (istAusgabe == true)
+            {
+                betrag = -betrag;
+            }
+            if (!Inputs.TryAdd("""Betrag""", betrag))
+            {
+                Console.WriteLine($"""Fehler beim speichern des Betrags: {betrag}!""");
             }
             bool istFix = User.GetIstFixInput();
             if (!Inputs.TryAdd("""IstFix""", istFix))
             {
-                Console.WriteLine($"""Fehler beim speichern des Datums: {istFix}!""");
+                Console.WriteLine($"""Fehler beim speichern ist Fix: {istFix}!""");
             }
 
             return Inputs;

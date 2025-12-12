@@ -4,7 +4,13 @@ namespace Buchhaltung.Common
 {
     public enum EMenu
     {
-        Exit = 0, NewEntry, Month, FixCosts, MonthComparison
+        Exit = 0, 
+        NewEntry,
+        Month, 
+        Year,
+        FixCosts, 
+        MonthComparison, 
+        YearComparison
     }
 
     public class MainMenu
@@ -14,8 +20,10 @@ namespace Buchhaltung.Common
             """Exit""",
             """Neue Einträge""",
             """Monats-Übersicht""",
+            """Jahres-Übersicht""",
             """Fix Kosten""",
-            """Monats-Vergleich"""
+            """Monats-Vergleich""",
+            """Jahres-Vergleich"""
         ];
 
         public MainMenu()
@@ -66,16 +74,31 @@ namespace Buchhaltung.Common
                         new FixCost().Show();
                         new Menu((int)EMenu.FixCosts);
                     }
+                    else if (menuChoice == (int)EMenu.Year)
+                    {
+                        new Year("").ShowAllMonthTotals();
+                        new Menu((int)EMenu.Year);
+                    }
                     else if (menuChoice == (int)EMenu.MonthComparison)
                     {
                         // string m1 = User.GetMonthInput("Monat 1 eingeben: ");
                         // string m2 = User.GetMonthInput("Monat 2 eingeben: ");
                         string monthDate1 = "11.2025";
                         string monthDate2 = "12.2025";
-                       
-                        MonthComparison monthComparison = new (monthDate1, monthDate2); 
+
+                        MonthComparison monthComparison = new(monthDate1, monthDate2);
                         monthComparison.ShowTotalDiffs();
                         new Menu((int)EMenu.MonthComparison);
+                    }
+                    else if (menuChoice == (int)EMenu.YearComparison)
+                    {
+                        // string y1 = User.GetYearInput("Jahr 1 eingeben: ");
+                        // string y2 = User.GetYearInput("Jahr 2 eingeben: ");
+                        string yearDate1 = "2024";
+                        string yearDate2 = "2025";
+
+                        YearComparison yearComparison = new(yearDate1, yearDate2);
+                        yearComparison.ShowTotalDiffs();
                     }
                 }
             }

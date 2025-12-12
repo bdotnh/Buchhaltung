@@ -19,16 +19,13 @@ namespace Buchhaltung
 
         public static int Test()
         {
-            Year year = new("");
-            year.ShowAllMonthTotals();
-            year.ShowYearTotals();
-
+            YearComparison yearComparison = new("2024", "2025");
+            
             return 0;
         }
 
         public static int Main()
         {
-            Test();
 
             Init();
             _ = new MainMenu();

@@ -66,7 +66,7 @@ namespace Buchhaltung.Common
                 if (menuChoice == (int)EMonthMenu.ChangeMonth)
                 {
                     newDate = User.GetMonthInput("Monat: ");
-                    new Month(newDate).ShowEntriesAndTotals();
+                    new Month(newDate).Show();
                 }
                 else if (menuChoice == (int)EMonthMenu.DeleteEntries)
                 {

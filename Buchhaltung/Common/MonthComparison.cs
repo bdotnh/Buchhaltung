@@ -1,22 +1,28 @@
 using System;
-using System.Collections.Generic;
 
 namespace Buchhaltung.Common
 {
-    public class MonthComparison
+    public class MonthComparison : Comparison
     {
-        private static Month Month1;
-        private static Month Month2;
+        private static Month month1;
+        private static Month month2;
         private static Dictionary<string, float> Diffs { get; set; }
 
-        public MonthComparison(string month1, string month2)
+        public MonthComparison(string date1, string date2)
         {
-            Month1 = new Month(month1);
-            Month2 = new Month(month2);
-            CalculateDiffs();
+            if (date1 == date2)
+            {
+                Console.WriteLine($"Error: Es wurde zweimal der selbe Monat eingeben ({date1})!");
+            }
+            else
+            {
+                month1 = new Month(date1);
+                month2 = new Month(date2);
+                CalculateDiffs();
+            }
         }
 
-        public void ShowTotalDiffs()
+        public override void ShowTotalDiffs()
         {
             try
             {
@@ -32,55 +38,26 @@ namespace Buchhaltung.Common
             {
                 Console.WriteLine($"Error: {e.Message}");
             }
-            
-            Console.WriteLine($"Einkommen:\nMonat {Month1.Date}: {Math.Round(Month1.MoneyIncome, 2)}€. Monat {Month2.Date}: {Math.Round(Month2.MoneyIncome, 2)}€");
-            Console.WriteLine($"Differenz: {Diffs["Income"]}€ ({Diffs["IncomeProz"]}%)");
 
-            Console.WriteLine($"Ausgaben:\nMonat {Month1.Date}: {Math.Round(Month1.MoneySpend, 2)}€. Monat {Month2.Date}: {Math.Round(Month2.MoneySpend, 2)}€");
-            Console.WriteLine($"Differenz: {Diffs["Spend"]}€ ({Diffs["SpendProz"]}%)");
+            Console.WriteLine($"Einkommen:\nMonat {month1.Date}: {Math.Round(month1.MoneyIncome, 2)}€, Monat {month2.Date}: {Math.Round(month2.MoneyIncome, 2)}€, Differenz: {Diffs["Income"]}€ ({Diffs["IncomeProz"]}%)");
 
-            Console.WriteLine($"Erpartes:\nMonat {Month1.Date}: {Math.Round(Month1.MoneyLeft, 2)}€. Monat {Month2.Date}: {Math.Round(Month2.MoneyLeft, 2)}€");
-            Console.WriteLine($"Differenz: {Diffs["Left"]}€ ({Diffs["LeftProz"]}%)\n");
+            Console.WriteLine($"Ausgaben:\nMonat {month1.Date}: {Math.Round(month1.MoneySpend, 2)}€, Monat {month2.Date}: {Math.Round(month2.MoneySpend, 2)}€, Differenz: {Diffs["Spend"]}€ ({Diffs["SpendProz"]}%)");
+
+            Console.WriteLine($"Erpartes:\nMonat {month1.Date}: {Math.Round(month1.MoneyLeft, 2)}€, Monat {month2.Date}: {Math.Round(month2.MoneyLeft, 2)}€, Differenz: {Diffs["Left"]}€ ({Diffs["LeftProz"]}%)\n");
         }
 
-        private static void CalculateDiffs()
+        protected override void CalculateDiffs()
         {
-            float incomeDiff = GetDifference(Month1.MoneyIncome, Month2.MoneyIncome);
-            float spendDiff = GetDifference(Month1.MoneySpend, Month2.MoneySpend);
-            float leftDiff = GetDifference(Month1.MoneyLeft, Month2.MoneyLeft);
-            float incomeDiffProz = GetPercentageChange(Month1.MoneyIncome, Month2.MoneyIncome);
-            float spendDiffProz = GetPercentageChange(Month1.MoneySpend, Month2.MoneySpend);
-            float leftDiffProz = GetPercentageChange(Month1.MoneyLeft, Month2.MoneyLeft);
+            float incomeDiff = GetDifference(month1.MoneyIncome, month2.MoneyIncome);
+            float spendDiff = GetDifference(month1.MoneySpend, month2.MoneySpend);
+            float leftDiff = GetDifference(month1.MoneyLeft, month2.MoneyLeft);
+            float incomeDiffProz = GetPercentageChange(month1.MoneyIncome, month2.MoneyIncome);
+            float spendDiffProz = GetPercentageChange(month1.MoneySpend, month2.MoneySpend);
+            float leftDiffProz = GetPercentageChange(month1.MoneyLeft, month2.MoneyLeft);
             Diffs = new()
             {
                 { "Income", incomeDiff }, { "Spend", spendDiff }, { "Left", leftDiff }, { "IncomeProz", incomeDiffProz }, { "SpendProz", spendDiffProz }, { "LeftProz", leftDiffProz }
             };
-        }
-
-        public static float GetDifference(float amount1, float amount2)
-        {
-            double value = 0.0f;
-            if (amount1 != amount2 && amount1 < amount2)
-            {
-                value = amount2 - amount1;
-            }
-            else if (amount1 != amount2 && amount1 > amount2)
-            {
-                value = amount1 - amount2;
-            }
-            value = Math.Round(value, 2);
-            float res = (float)value;
-
-            return res;
-        }
-
-        public static float GetPercentageChange(float startValue, float endValue)
-        {
-            double diff = 100 * (endValue - startValue) / startValue;
-            double diffRounded = Math.Round(diff, 2);
-            float res = (float)diffRounded;
-
-            return res;
         }
     }
 }
