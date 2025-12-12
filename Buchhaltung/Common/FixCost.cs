@@ -93,14 +93,14 @@ namespace Buchhaltung.Common
             Console.WriteLine(" ID   |     Datum     |   Betrag  |    Geschäft    | Ein-/Ausgabe | IstFix |");
             for (int i = 0; i < fixCount; i++)
             {
-                Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}    |    {entries[i].Geschäft}   |   {Month.FormatWasSpended(entries[i].IstAusgabe)}     |   {Month.FormatIsFix(entries[i].IstFix)}");
+                Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}€    |    {entries[i].Geschäft}   |   {Month.FormatWasSpended(entries[i].IstAusgabe)}     |   {Month.FormatIsFix(entries[i].IstFix)}");
             }
             ShowTotals();
         }
 
         private void ShowTotals()
         {
-            Console.WriteLine($"Einkommen: {moneyIncome} €,     Ausgaben: {moneySpend} €,     Gespart: {moneyLeft} €.");
+            Console.WriteLine($"Einkommen: {moneyIncome}€,     Ausgaben: {moneySpend}€,     Übrig: {moneyLeft}€.");
         }
 
         private void CalculateTotals()

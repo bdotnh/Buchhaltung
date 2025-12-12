@@ -17,8 +17,19 @@ namespace Buchhaltung
             Console.WriteLine("""Initialisierung erfolgreich abgeschlossen.""");
         }
 
+        public static int Test()
+        {
+            Year year = new("");
+            year.ShowAllMonthTotals();
+            year.ShowYearTotals();
+
+            return 0;
+        }
+
         public static int Main()
         {
+            Test();
+
             Init();
             _ = new MainMenu();
 

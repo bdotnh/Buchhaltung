@@ -19,11 +19,15 @@ namespace Buchhaltung.Common
         public int EntryCount { get => entries.Count; }
         private string filepath = "";
 
-        public Month(string Date)
+        public Month(string dateInput)
         {
-            if (string.IsNullOrEmpty(date))
+            if (string.IsNullOrEmpty(dateInput))
             {
                 date = Common.GetCurrentMonth();
+            }
+            else
+            {
+                date = dateInput;
             }
             filepath = Directory.GetCurrentDirectory() + "/Src/" + date + "_data.json";
             if (File.Exists(filepath))
@@ -33,7 +37,7 @@ namespace Buchhaltung.Common
             }
             else
             {
-                Console.WriteLine($"Monat: {Date} ist leer.");
+                Console.WriteLine($"Monat: {date} ist leer.");
             }
         }
 
@@ -78,14 +82,14 @@ namespace Buchhaltung.Common
             Console.WriteLine(" ID   |     Datum     |   Betrag     |    Geschäft    |   Ein-/Ausgabe   |   IstFix");
             for (int i = 0; i < entries.Count; i++)
             {
-                Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}      |      {entries[i].Geschäft}      |    {FormatWasSpended(entries[i].IstAusgabe)}      |   {FormatIsFix(entries[i].IstFix)}");
+                Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}€      |      {entries[i].Geschäft}      |    {FormatWasSpended(entries[i].IstAusgabe)}      |   {FormatIsFix(entries[i].IstFix)}");
             }
-            ShowTotals();
+            ShowMonthTotals();
         }
 
-        private void ShowTotals()
+        private void ShowMonthTotals()
         {
-            Console.WriteLine($"Einkommen: {moneyIncome} €,     Ausgaben: {moneySpend} €,     Gespart: {moneyLeft} €.");
+            Console.WriteLine($"Einkommen: {moneyIncome}€,     Ausgaben: {moneySpend}€,     Übrig: {moneyLeft}€.");
         }
 
         public static string FormatWasSpended(bool input)

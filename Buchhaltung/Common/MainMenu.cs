@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Utf8Json.Formatters;
 
 namespace Buchhaltung.Common
 {
@@ -76,7 +74,7 @@ namespace Buchhaltung.Common
                         string monthDate2 = "12.2025";
                        
                         MonthComparison monthComparison = new (monthDate1, monthDate2); 
-                        monthComparison.ShowDiffs();
+                        monthComparison.ShowTotalDiffs();
                         new Menu((int)EMenu.MonthComparison);
                     }
                 }

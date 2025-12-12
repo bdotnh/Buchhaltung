@@ -5,10 +5,10 @@ namespace Buchhaltung.Common
 {
     public class Common
     {
-        private static string currDir = Directory.GetCurrentDirectory() + """/Src/""";
+        public static string CurrDir = Directory.GetCurrentDirectory() + """/Src/""";
         public static string FileFormat = """_data.json""";
-        public static string CurrMonthFilepath = currDir + GetCurrentMonth() + FileFormat;
-        public static string FixCostFilepath = currDir + """FixCosts""" + FileFormat;
+        public static string CurrMonthFilepath = CurrDir + GetCurrentMonth() + FileFormat;
+        public static string FixCostFilepath = CurrDir + """FixCosts""" + FileFormat;
         public static JsonSerializerOptions JsonOptions = new JsonSerializerOptions
         {
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
@@ -16,16 +16,16 @@ namespace Buchhaltung.Common
         };
 
 
-        public static List<string> GetFilenamesInDir(string dirPath)
+        public static List<string> GetFilenamesInDir()
         {
             List<string> allFilenames = new List<string>();
-            foreach (string filename in Directory.GetFiles(dirPath))
+            foreach (string filename in Directory.GetFiles(CurrDir))
             {
                 allFilenames.Append(filename);
             }
             if (allFilenames.Count < 1)
             {
-                Console.WriteLine($"""Keine Datein im Pfad: {currDir} gefunden!""");
+                Console.WriteLine($"""Keine Datein im Pfad: {CurrDir} gefunden!""");
             }
 
             return allFilenames;
@@ -54,14 +54,6 @@ namespace Buchhaltung.Common
             return entries;
         }
 
-        public static string GetCurrentMonth()
-        {
-            var today = DateOnly.FromDateTime(DateTime.Now); // Todays date in mm/dd/yyyy format.
-            string currentMonth = $"""{today.Month}.{today.Year}""";
-
-            return currentMonth;
-        }
-
         public static int GetUserInput(int maxCondition, int minCondition = 0)
         {
             int res = 0;
@@ -80,6 +72,22 @@ namespace Buchhaltung.Common
             }
 
             return res;
+        }
+
+        public static string GetCurrentMonth()
+        {
+            var today = DateOnly.FromDateTime(DateTime.Now); // Todays date in mm/dd/yyyy format.
+            string currentMonth = $"""{today.Month}.{today.Year}""";
+
+            return currentMonth;
+        }
+
+        public static string GetCurrentYear()
+        {
+            var today = DateOnly.FromDateTime(DateTime.Now);
+            string currentYear = $""""{today.Year}"""";
+        
+            return currentYear;
         }
     }
 }

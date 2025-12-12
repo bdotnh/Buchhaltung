@@ -16,29 +16,31 @@ namespace Buchhaltung.Common
             CalculateDiffs();
         }
 
-        public void ShowDiffs()
+        public void ShowTotalDiffs()
         {
-            ShowTotalDiffs();
-        }
-
-        private static void ShowTotalDiffs()
-        {
-            foreach (var diff in Diffs)
+            try
             {
-                if (!Diffs.TryGetValue(diff.Key, out float diffValue))
+                foreach (var diff in Diffs)
                 {
-                    Console.WriteLine($"Error: Cant get {diff.Key}s Value!");
+                    if (!Diffs.TryGetValue(diff.Key, out float diffValue))
+                    {
+                        Console.WriteLine($"Error: Cant get {diff.Key}s Value!");
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+            }
+            
+            Console.WriteLine($"Einkommen:\nMonat {Month1.Date}: {Math.Round(Month1.MoneyIncome, 2)}€. Monat {Month2.Date}: {Math.Round(Month2.MoneyIncome, 2)}€");
+            Console.WriteLine($"Differenz: {Diffs["Income"]}€ ({Diffs["IncomeProz"]}%)");
 
-            Console.WriteLine($"Einkommen:\nMonat {Month1.Date}: {Math.Round(Month1.MoneyIncome, 2)} €. Monat {Month2.Date}: {Math.Round(Month2.MoneyIncome, 2)} €");
-            Console.WriteLine($"Differenz: {Diffs["Income"]} € ({Diffs["IncomeProz"]} %)");
+            Console.WriteLine($"Ausgaben:\nMonat {Month1.Date}: {Math.Round(Month1.MoneySpend, 2)}€. Monat {Month2.Date}: {Math.Round(Month2.MoneySpend, 2)}€");
+            Console.WriteLine($"Differenz: {Diffs["Spend"]}€ ({Diffs["SpendProz"]}%)");
 
-            Console.WriteLine($"Ausgaben:\nMonat {Month1.Date}: {Math.Round(Month1.MoneySpend, 2)} €. Monat {Month2.Date}: {Math.Round(Month2.MoneySpend, 2)} €");
-            Console.WriteLine($"Differenz: {Diffs["Spend"]} € ({Diffs["SpendProz"]} %)");
-
-            Console.WriteLine($"Erpartes:\nMonat {Month1.Date}: {Math.Round(Month1.MoneyLeft, 2)} €. Monat {Month2.Date}: {Math.Round(Month2.MoneyLeft, 2)} €");
-            Console.WriteLine($"Differenz: {Diffs["Left"]} € ({Diffs["LeftProz"]} %)\n");
+            Console.WriteLine($"Erpartes:\nMonat {Month1.Date}: {Math.Round(Month1.MoneyLeft, 2)}€. Monat {Month2.Date}: {Math.Round(Month2.MoneyLeft, 2)}€");
+            Console.WriteLine($"Differenz: {Diffs["Left"]}€ ({Diffs["LeftProz"]}%)\n");
         }
 
         private static void CalculateDiffs()
