@@ -14,40 +14,117 @@ namespace Buchhaltung.Common
         DeleteEntry,
     }
 
+    public enum EYearMenu
+    {
+        Exit = 0,
+        ChangeYear
+    }
+
     public class Menu
     {
         public static string[] menuPrompts = [];
 
-        private string[] promptEntryMenu =
+        private readonly string[] promptEntryMenu =
         [
             "Exit"
         ];
 
-        private string[] promptMonthMenu =
-        [
-            "Exit", "Monat ändern", "Einträge löschen"
-        ];
-
-        private string[] promptFixMenu =
-        [
-            "Exit", "Fixkosten-Einträge löschen"
-        ];
-
-        private string[] promptMonthComparisonMenu =
+        private readonly string[] promptMonthMenu =
         [
             "Exit",
+            "Monat ändern",
+            "Einträge löschen"
+        ];
+
+        private readonly string[] promptYearMenu =
+        [
+            "Exit",
+            "Jahr ändern",
+        ];
+
+        private readonly string[] promptFixMenu =
+        [
+            "Exit",
+            "Fixkosten-Einträge löschen"
+        ];
+
+        private readonly string[] promptMonthComparisonMenu =
+        [
+            "Exit",
+            "Monate auswählen/ändern"
+        ];
+
+        private readonly string[] promptYearComparisonMenu =
+        [
+            "Exit",
+            "Jahre auswählen/ändern"
         ];
 
         public Menu(int menu)
         {
-            InitMenuPrompt(menu);
             if (menu == (int)EMenu.Month)
             {
+                InitMenuPrompt(menu);
                 MonthMenu();
             }
-            if (menu == (int)EMenu.FixCosts)
+            else if (menu == (int)EMenu.Year)
             {
+
+                InitMenuPrompt(menu);
+                YearMenu();
+            }
+            else if (menu == (int)EMenu.FixCosts)
+            {
+
+                InitMenuPrompt(menu);
                 FixCostMenu();
+            }
+            else if (menu == (int)EMenu.MonthComparison)
+            {
+                MonthComparisonMenu();
+                InitMenuPrompt(menu);
+            }
+            else if (menu == (int)EMenu.YearComparison)
+            {
+                YearComparisonMenu();
+                InitMenuPrompt(menu);
+            }
+        }
+
+        private static void YearComparisonMenu()
+        {
+            string y1 = User.GetYearInput("Jahr 1 eingeben: ");
+            string y2 = User.GetYearInput("Jahr 2 eingeben: ");
+
+            YearComparison yearComparison = new(y1, y2);
+            yearComparison.ShowComparison();
+        }
+
+        private static void MonthComparisonMenu()
+        {
+            string m1 = User.GetMonthInput("Monat 1 eingeben: ");
+            string m2 = User.GetMonthInput("Monat 2 eingeben: ");
+
+            MonthComparison monthComparison = new(m1, m2);
+            monthComparison.ShowComparison();
+        }
+
+        private static void YearMenu()
+        {
+            Year year = new("");
+            string message = "Eingabe: ";
+            int menuChoice = User.GetInputNumber(message);
+            if (menuChoice == (int)EYearMenu.Exit)
+            {
+                _ = new MainMenu();
+            }
+            else
+            {
+                if (menuChoice == (int)EYearMenu.ChangeYear)
+                {
+                    string newDate = User.GetYearInput("Jahr: ");
+                    new Year(newDate).Show();
+                }
             }
         }
 
@@ -94,22 +171,14 @@ namespace Buchhaltung.Common
 
                     List<int> entryChoices = User.GetNumsInput("Zum löschen mehrerer Einträge Nummer mit ',' trennen: ");
                     List<Entry> entries = fixCost.SelectEntries(entryChoices);
-                    fixCost.DeleteEntries(entries); 
+                    fixCost.DeleteEntries(entries);
                 }
             }
         }
 
-        private static int GetFixCostChoice()
-        {
-            string message = "Zum löschen des Fixkosten-Eintrages, bitte Nummer eingeben: ";
-            int userChoice = User.GetInputNumber(message);
-
-            return userChoice;
-        }
-
         public static void ShowPrompts(string[] menuPrompts)
         {
-            Console.WriteLine("-- HauptMenü --");
+            Console.WriteLine("-- Menü --");
             for (int i = 0; i < menuPrompts.Length; i++)
             {
                 Console.WriteLine($"{i}. {menuPrompts[i]}.");
@@ -126,6 +195,10 @@ namespace Buchhaltung.Common
             {
                 ShowPrompts(promptMonthMenu);
             }
+            else if (menu == (int)EMenu.Year)
+            {
+                ShowPrompts(promptYearMenu);
+            }
             else if (menu == (int)EMenu.FixCosts)
             {
                 ShowPrompts(promptFixMenu);
@@ -133,6 +206,10 @@ namespace Buchhaltung.Common
             else if (menu == (int)EMenu.MonthComparison)
             {
                 ShowPrompts(promptMonthComparisonMenu);
+            }
+            else if (menu == (int)EMenu.YearComparison)
+            {
+                ShowPrompts(promptYearComparisonMenu);
             }
         }
     }

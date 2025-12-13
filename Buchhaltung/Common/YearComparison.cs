@@ -6,8 +6,8 @@ namespace Buchhaltung.Common
     {
         private static Year year1;
         private static Year year2;
-        private static Dictionary<string, float> Diffs { get; set; } 
-    
+        private static Dictionary<string, float> Diffs { get; set; }
+
         public YearComparison(string date1, string date2)
         {
             if (date1 == date2)
@@ -16,13 +16,20 @@ namespace Buchhaltung.Common
             }
             else
             {
-                year1 = new(date1);
-                year2 = new(date2);
-                CalculateDiffs();
+                try
+                {
+                    year1 = new(date1);
+                    year2 = new(date2);
+                    CalculateDiffs();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error: {e.Message}");
+                }
             }
         }
 
-        public override void ShowTotalDiffs()
+        public override void ShowComparison()
         {
             try
             {
@@ -50,7 +57,7 @@ namespace Buchhaltung.Common
         {
             float incomeDiff = GetDifference(year1.TotalIncome, year2.TotalIncome);
             float spendDiff = GetDifference(year1.TotalSpend, year2.TotalSpend);
-           
+
             float leftDiff = GetDifference(year1.TotalLeft, year2.TotalLeft);
             float incomeDiffProz = GetPercentageChange(year1.TotalIncome, year2.TotalIncome);
             float spendDiffProz = GetPercentageChange(year1.TotalSpend, year2.TotalSpend);

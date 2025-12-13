@@ -75,6 +75,42 @@ namespace Buchhaltung.Common
             return menuChoice;
         }
 
+        public static string GetYearInput(string message)
+        {
+            string[] allFilesInSrcPath = Directory.GetFiles(Directory.GetCurrentDirectory() + "/Src/");
+            List<string> allYearFilepaths = new List<string>();
+            List<string> allSavedYears = new List<string>();
+            foreach (string filepath in allFilesInSrcPath)
+            {
+                allYearFilepaths.Add(filepath);
+                string year = filepath.Substring(filepath.LastIndexOf('_') - 3, filepath.LastIndexOf('_'));
+                allSavedYears.Add(year);
+            }
+
+            bool isValid = false;
+            while (!isValid)
+            {
+                Console.WriteLine("""Alle Gepseicherten Jahre: """);
+                foreach (string year in allSavedYears)
+                {
+                    Console.WriteLine($"""Jahr: {year}.""");
+                }
+
+                Console.WriteLine(message);
+                string userInput = Console.ReadLine();
+                if (allSavedYears.Contains(userInput))
+                {
+                    return userInput;
+                }
+                else
+                {
+                    Console.WriteLine($"""Zu dem ausgewählte Jahr: {userInput} wurde leider nichts gefunden!""");
+                }
+            }
+
+            return "Error";
+        }
+
         public static string GetMonthInput(string message)
         {
             string[] allFilesInSrcPath = Directory.GetFiles(Directory.GetCurrentDirectory() + "/Src/");

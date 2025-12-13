@@ -137,8 +137,8 @@ namespace Buchhaltung.Common
                     moneyIncome += entries[i].Betrag;
                 }
             }
-            moneyLeft = moneyIncome - moneySpend;
-
+            float diff = moneyIncome + moneySpend;
+            moneyLeft = (float)Math.Round(diff, 2); 
         }
 
         private void LoadEntries()

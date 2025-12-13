@@ -12,5 +12,12 @@
     "Geschäft": "BA/JC",
     "IstAusgabe": false,
     "IstFix": false
+  },
+  {
+    "Datum": "12.13.2025",
+    "Betrag": -11.11,
+    "Geschäft": "Test",
+    "IstAusgabe": true,
+    "IstFix": false
   }
 ]

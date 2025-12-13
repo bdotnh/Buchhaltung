@@ -4,7 +4,7 @@ namespace Buchhaltung.Common
 {
     public class Comparison
     {
-        public virtual void ShowTotalDiffs(){}
+        public virtual void ShowComparison(){}
         protected virtual void CalculateDiffs(){}
 
         protected virtual float GetDifference(float amount1, float amount2)

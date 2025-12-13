@@ -12,7 +12,7 @@ namespace Buchhaltung.Common
         {
             if (date1 == date2)
             {
-                Console.WriteLine($"Error: Es wurde zweimal der selbe Monat eingeben ({date1})!");
+                Console.WriteLine($"Error: Es wurde zweimal der selbe Monat eingeben (1: {date1}, 2: {date2})!");
             }
             else
             {
@@ -22,7 +22,7 @@ namespace Buchhaltung.Common
             }
         }
 
-        public override void ShowTotalDiffs()
+        public override void ShowComparison()
         {
             try
             {

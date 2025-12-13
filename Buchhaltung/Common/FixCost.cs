@@ -24,8 +24,10 @@ namespace Buchhaltung.Common
 
         public FixCost()
         {
-            LoadEntries();
-            CalculateTotals();
+            if (LoadEntries() == 0)
+            {
+                CalculateTotals();
+            }
         }
 
         public void DeleteEntries(List<Entry> list)
@@ -89,13 +91,16 @@ namespace Buchhaltung.Common
 
         public void Show()
         {
-            fixCount = entries.Count;
-            Console.WriteLine(" ID   |     Datum     |   Betrag  |    Geschäft    | Ein-/Ausgabe | IstFix |");
-            for (int i = 0; i < fixCount; i++)
+            if (entries.Count > 1)
             {
-                Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}€    |    {entries[i].Geschäft}   |   {Month.FormatWasSpended(entries[i].IstAusgabe)}     |   {Month.FormatIsFix(entries[i].IstFix)}");
+                fixCount = entries.Count;
+                Console.WriteLine(" ID   |     Datum     |   Betrag  |    Geschäft    | Ein-/Ausgabe | IstFix |");
+                for (int i = 0; i < fixCount; i++)
+                {
+                    Console.WriteLine($" {i}    |   {entries[i].Datum}  |   {entries[i].Betrag}€    |    {entries[i].Geschäft}   |   {Month.FormatWasSpended(entries[i].IstAusgabe)}     |   {Month.FormatIsFix(entries[i].IstFix)}");
+                }
+                ShowTotals();
             }
-            ShowTotals();
         }
 
         private void ShowTotals()
@@ -121,13 +126,15 @@ namespace Buchhaltung.Common
             moneyLeft = moneyIncome - moneySpend;
         }
 
-        private static void LoadEntries()
+        private static int LoadEntries()
         {
             entries = Common.GetEntries(filepath);
             if (entries.Count < 1)
             {
                 Console.WriteLine("Error: Es wurden keine gespeicherten Fixkosten gefunden!");
+                return -1;
             }
+            return 0;
         }
     }
 }
