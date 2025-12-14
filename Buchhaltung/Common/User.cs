@@ -77,27 +77,22 @@ namespace Buchhaltung.Common
 
         public static string GetYearInput(string message)
         {
-            string[] allFilesInSrcPath = Directory.GetFiles(Directory.GetCurrentDirectory() + "/Src/");
-            List<string> allYearFilepaths = new List<string>();
-            List<string> allSavedYears = new List<string>();
-            foreach (string filepath in allFilesInSrcPath)
-            {
-                allYearFilepaths.Add(filepath);
-                string year = filepath.Substring(filepath.LastIndexOf('_') - 3, filepath.LastIndexOf('_'));
-                allSavedYears.Add(year);
-            }
-
+            List<string> allSavedYears = GetAllSavedYears();
             bool isValid = false;
             while (!isValid)
             {
                 Console.WriteLine("""Alle Gepseicherten Jahre: """);
                 foreach (string year in allSavedYears)
                 {
-                    Console.WriteLine($"""Jahr: {year}.""");
+                    Console.Write($"{year}, ");
                 }
 
-                Console.WriteLine(message);
+                Console.WriteLine($"\n{message} (Oder 0 zum verlassen)");
                 string userInput = Console.ReadLine();
+                if (userInput == "0")
+                {
+                    new MainMenu();
+                }
                 if (allSavedYears.Contains(userInput))
                 {
                     return userInput;
@@ -111,30 +106,43 @@ namespace Buchhaltung.Common
             return "Error";
         }
 
-        public static string GetMonthInput(string message)
+        public static List<string> GetAllSavedYears()
         {
-            string[] allFilesInSrcPath = Directory.GetFiles(Directory.GetCurrentDirectory() + "/Src/");
-            List<string> allMonthFilepaths = new List<string>();
-            List<string> allSavedMonths = new List<string>();
-            foreach (string filepath in allFilesInSrcPath)
+            string[] allFiles = Directory.GetFiles(Directory.GetCurrentDirectory() + "/Src/");
+            List<string> allYearFiles = new List<string>();
+            List<string> allSavedYears = new List<string>();
+            foreach (string filepath in allFiles)
             {
-                allMonthFilepaths.Add(filepath);
-                string month = filepath.Substring(filepath.LastIndexOf('/') + 1);
-                month = month.Substring(0, month.LastIndexOf('_'));
-                allSavedMonths.Add(month);
+                allYearFiles.Add(filepath);
+                string filename = filepath.Substring(filepath.LastIndexOf('/') + 1);
+                string year = filename.Substring(3, filename.LastIndexOf('_') - 3);
+                if (int.TryParse(year, out int x) && !allSavedYears.Contains(year))
+                {
+                    allSavedYears.Add(year);
+                }
             }
 
+            return allSavedYears;
+        }
+
+        public static string GetMonthInput(string message)
+        {
+            List<string> allSavedMonths = GetAllSavedMonths();
             bool isValid = false;
             while (!isValid)
             {
                 Console.WriteLine("""Alle gespeicherten Monate: """);
                 foreach (string month in allSavedMonths)
                 {
-                    Console.WriteLine($"""Monat: {month}.""");
+                    Console.Write($"{month}, ");
                 }
 
-                Console.WriteLine(message);
+                Console.WriteLine($"\n{message} (Oder 0 zum verlassen)");
                 string userInput = Console.ReadLine();
+                if (userInput == "0")
+                {
+                    new MainMenu();
+                }
                 if (allSavedMonths.Contains(userInput))
                 {
                     return userInput;
@@ -148,12 +156,33 @@ namespace Buchhaltung.Common
             return "Error";
         }
 
-        public static void ClearCurrentConsoleLine()
+        public static List<string> GetAllSavedMonths()
         {
-            int currentLineCursor = Console.CursorTop;
-            Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, currentLineCursor);
+            string[] allFiles = Directory.GetFiles(Directory.GetCurrentDirectory() + "/Src/");
+            List<string> AllMonthFiles = new List<string>();
+            List<string> allSavedMonths = new List<string>();
+            foreach (string filepath in allFiles)
+            {
+                AllMonthFiles.Add(filepath);
+                string month = filepath.Substring(filepath.LastIndexOf('/') + 1);
+                month = month.Substring(0, month.LastIndexOf('_'));
+                if (int.TryParse(month.Substring(0, 2), out int x))
+                {
+                    allSavedMonths.Add(month);
+                }
+            }
+
+            return allSavedMonths;
+        }
+
+        public static bool IsDateSaved(string date)
+        {
+            if (Directory.GetFiles(Directory.GetCurrentDirectory() + "/Src/").Contains(date))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public static string GetDatumInput()

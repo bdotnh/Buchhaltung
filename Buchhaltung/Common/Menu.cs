@@ -48,18 +48,6 @@ namespace Buchhaltung.Common
             "Fixkosten-Einträge löschen"
         ];
 
-        private readonly string[] promptMonthComparisonMenu =
-        [
-            "Exit",
-            "Monate auswählen/ändern"
-        ];
-
-        private readonly string[] promptYearComparisonMenu =
-        [
-            "Exit",
-            "Jahre auswählen/ändern"
-        ];
-
         public Menu(int menu)
         {
             if (menu == (int)EMenu.Month)
@@ -81,32 +69,34 @@ namespace Buchhaltung.Common
             }
             else if (menu == (int)EMenu.MonthComparison)
             {
-                MonthComparisonMenu();
-                InitMenuPrompt(menu);
+                if (User.GetAllSavedMonths().Count < 2)
+                {
+                    Console.WriteLine("Es sind noch keine 2 Monate gespeichert. Daher ist ein Vergleich nicht möglich.");
+                }
+                else
+                {
+                    string m1 = User.GetMonthInput("Monat 1 eingeben: ");
+                    string m2 = User.GetMonthInput("Monat 2 eingeben: ");
+
+                    MonthComparison monthComparison = new(m1, m2);
+                    monthComparison.ShowComparison();
+                }
             }
             else if (menu == (int)EMenu.YearComparison)
             {
-                YearComparisonMenu();
-                InitMenuPrompt(menu);
+                if (User.GetAllSavedYears().Count < 2)
+                {
+                    Console.WriteLine("Es sind noch keine 2 Jahre gespeichert. Daher ist ein Vergleich nicht möglich.");
+                }
+                else
+                {
+                    string y1 = User.GetYearInput("Jahr 1 eingeben: ");
+                    string y2 = User.GetYearInput("Jahr 2 eingeben: ");
+
+                    YearComparison yearComparison = new(y1, y2);
+                    yearComparison.ShowComparison();
+                }
             }
-        }
-
-        private static void YearComparisonMenu()
-        {
-            string y1 = User.GetYearInput("Jahr 1 eingeben: ");
-            string y2 = User.GetYearInput("Jahr 2 eingeben: ");
-
-            YearComparison yearComparison = new(y1, y2);
-            yearComparison.ShowComparison();
-        }
-
-        private static void MonthComparisonMenu()
-        {
-            string m1 = User.GetMonthInput("Monat 1 eingeben: ");
-            string m2 = User.GetMonthInput("Monat 2 eingeben: ");
-
-            MonthComparison monthComparison = new(m1, m2);
-            monthComparison.ShowComparison();
         }
 
         private static void YearMenu()
@@ -178,7 +168,7 @@ namespace Buchhaltung.Common
 
         public static void ShowPrompts(string[] menuPrompts)
         {
-            Console.WriteLine("-- Menü --");
+            Console.WriteLine("\n-- Menü --");
             for (int i = 0; i < menuPrompts.Length; i++)
             {
                 Console.WriteLine($"{i}. {menuPrompts[i]}.");
@@ -202,14 +192,6 @@ namespace Buchhaltung.Common
             else if (menu == (int)EMenu.FixCosts)
             {
                 ShowPrompts(promptFixMenu);
-            }
-            else if (menu == (int)EMenu.MonthComparison)
-            {
-                ShowPrompts(promptMonthComparisonMenu);
-            }
-            else if (menu == (int)EMenu.YearComparison)
-            {
-                ShowPrompts(promptYearComparisonMenu);
             }
         }
     }

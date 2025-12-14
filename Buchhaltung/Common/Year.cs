@@ -27,7 +27,6 @@ namespace Buchhaltung.Common
             }
             try
             {
-
                 LoadMonthFilenames();
                 LoadMonths();
                 CalculateYearTotals();
@@ -40,13 +39,14 @@ namespace Buchhaltung.Common
 
         public void Show()
         {
+            Console.WriteLine($"\nZusammenfassung für das Jahr {date}: ");
             ShowAllMonthTotals();
             ShowYearTotals();
         }
 
         private void ShowYearTotals()
         {
-            Console.WriteLine($"Zusammenfassung für das Jahr {date}:\nEinkommen: {totalIncome}€, Ausgaben: {totalSpend}€, Übrig: {totalLeft}€.");
+            Console.WriteLine($"Gesamt-Einkommen: {totalIncome}€, Gesamt-Ausgaben: {totalSpend}€, Gesamt-Ersparnis: {totalLeft}€.");
         }
 
         private void ShowAllMonthTotals()

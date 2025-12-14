@@ -77,6 +77,7 @@ namespace Buchhaltung.Common
                     }
                     else if (menuChoice == (int)EMenu.YearComparison)
                     {
+                        
                         new Menu((int)EMenu.YearComparison);
                     }
                 }
@@ -84,7 +85,7 @@ namespace Buchhaltung.Common
         }
         private void ShowMainMenuPrompts()
         {
-            Console.WriteLine("-- Hauptmenü --");
+            Console.WriteLine("\n-- Hauptmenü --");
             for (int i = 0; i < promptMainMenu.Length; i++)
             {
                 Console.WriteLine($"{i}. {promptMainMenu[i]}.");

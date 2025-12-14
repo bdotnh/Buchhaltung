@@ -39,11 +39,11 @@ namespace Buchhaltung.Common
                 Console.WriteLine($"Error: {e.Message}");
             }
 
-            Console.WriteLine($"Einkommen:\nMonat {month1.Date}: {Math.Round(month1.MoneyIncome, 2)}€, Monat {month2.Date}: {Math.Round(month2.MoneyIncome, 2)}€, Differenz: {Diffs["Income"]}€ ({Diffs["IncomeProz"]}%)");
+            Console.WriteLine($"\nEinkommen:\nMonat {month1.Date}: {Math.Round(month1.MoneyIncome, 2)}€, Monat {month2.Date}: {Math.Round(month2.MoneyIncome, 2)}€, Differenz: {Diffs["Income"]}€ ({Diffs["IncomeProz"]}%)");
 
             Console.WriteLine($"Ausgaben:\nMonat {month1.Date}: {Math.Round(month1.MoneySpend, 2)}€, Monat {month2.Date}: {Math.Round(month2.MoneySpend, 2)}€, Differenz: {Diffs["Spend"]}€ ({Diffs["SpendProz"]}%)");
 
-            Console.WriteLine($"Erpartes:\nMonat {month1.Date}: {Math.Round(month1.MoneyLeft, 2)}€, Monat {month2.Date}: {Math.Round(month2.MoneyLeft, 2)}€, Differenz: {Diffs["Left"]}€ ({Diffs["LeftProz"]}%)\n");
+            Console.WriteLine($"Erpartes:\nMonat {month1.Date}: {Math.Round(month1.MoneyLeft, 2)}€, Monat {month2.Date}: {Math.Round(month2.MoneyLeft, 2)}€, Differenz: {Diffs["Left"]}€ ({Diffs["LeftProz"]}%)");
         }
 
         protected override void CalculateDiffs()
