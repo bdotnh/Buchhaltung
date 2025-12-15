@@ -1,2 +1,0 @@
-/home/ben/cs_workspace/Buchhaltung/Buchhaltung/bin/Release/net8.0/linux-x64/publish/Buchhaltung.pdb
-/home/ben/cs_workspace/Buchhaltung/Buchhaltung/bin/Release/net8.0/linux-x64/publish/Buchhaltung
