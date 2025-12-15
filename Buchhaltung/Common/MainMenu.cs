@@ -51,23 +51,41 @@ namespace Buchhaltung.Common
                             (bool)inputs.GetValueOrDefault("IstAusgabe"),
                             (bool)inputs.GetValueOrDefault("IstFix")
                         );
-                        Entry.Save(Common.CurrMonthFilepath, entry);
+                        string monthInput = entry.Datum.Substring(3);
+                        DateOnly dateNow = DateOnly.FromDateTime(DateTime.Now);
+                        string thisMonth = $"{dateNow.Month}.{dateNow.Year}";
+                        string filepath;
+                        if (monthInput == thisMonth)
+                        {
+                            filepath = Common.CurrMonthFilepath;
+                        }
+                        else
+                        {
+                            filepath = Common.GetFilepathFromMonthDate(monthInput);
+                        }
+                        Entry.Save(filepath, entry);
                     }
                     if (menuChoice == (int)EMenu.Month)
                     {
-                        new Month("").Show();
-                        new Menu((int)EMenu.Month);
+                        Month month = new("");
+                        month.Show();
+                        new Menu((int)EMenu.Month, month, null);
                     }
                     else if (menuChoice == (int)EMenu.Year)
                     {
-                        new Year("").Show();
-                        new Menu((int)EMenu.Year);
+                        Year year = new("");
+                        year.Show();
+                        new Menu((int)EMenu.Year, null, year);
                     }
                     else if (menuChoice == (int)EMenu.FixCosts)
                     {
-                        new FixCost().Show();
-                        if (FixCost.fixCount > 1)
+                        if (FixCost.fixCount < 1)
                         {
+                            Console.WriteLine("Es sind noch keine Fixkosten vorhanden.");
+                        }
+                        else
+                        {
+                            new FixCost().Show();
                             new Menu((int)EMenu.FixCosts);
                         }
                     }
@@ -77,7 +95,7 @@ namespace Buchhaltung.Common
                     }
                     else if (menuChoice == (int)EMenu.YearComparison)
                     {
-                        
+
                         new Menu((int)EMenu.YearComparison);
                     }
                 }

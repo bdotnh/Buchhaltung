@@ -25,7 +25,7 @@ namespace Buchhaltung.Common
         }
 
         public static void Save(string filepath, Entry entry)
-        { 
+        {
             var options = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
@@ -43,20 +43,41 @@ namespace Buchhaltung.Common
             }
             else
             {
-                var entryList = new List<Entry>
+                List<Entry> entryList = new();
+                Entry lastMonthResult = GetResultLastMonth();
+                if (lastMonthResult.Betrag != 0.0)
                 {
-                    entry
-                };
+                    entryList.Add(lastMonthResult);
+                }
+                entryList.Add(entry);
                 string jsonData = JsonSerializer.Serialize(entryList, options);
                 File.WriteAllText(filepath, jsonData, new UTF8Encoding());
             }
             Console.WriteLine("""Eintrag wurde gespeichert.""");
-            
+
             if (entry.IstFix)
             {
                 FixCost.Save(entry);
-                Console.WriteLine("""Eintrag wurde zu den Fixkosten hinzugefügt."""); 
+                Console.WriteLine("""Eintrag wurde zu den Fixkosten hinzugefügt.""");
             }
+        }
+
+        public static Entry GetResultLastMonth()
+        {
+            string dateLastMonth = Common.GetLastMonthDate();
+            Entry result;  
+            if (!File.Exists(Common.GetFilepathFromMonthDate(dateLastMonth)))
+            {
+                float savingsOrDebts = User.GetSavingsOrDebts();
+                result = new Entry(dateLastMonth, savingsOrDebts, savingsOrDebts < 0 ? "Schulden" : "Erpartes", savingsOrDebts < 0, false); 
+            }
+            else
+            {
+                Month lastMonth = new(dateLastMonth);
+                result = new Entry(dateLastMonth, lastMonth.MoneyLeft, "Erspartes", lastMonth.MoneyLeft < 0, false);
+            }
+
+            return result;
         }
 
         public static Dictionary<string, object> GetInputs()

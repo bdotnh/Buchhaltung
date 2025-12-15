@@ -40,22 +40,24 @@ namespace Buchhaltung.Common
         public void Show()
         {
             Console.WriteLine($"\nZusammenfassung für das Jahr {date}: ");
-            ShowAllMonthTotals();
+            ShowMonthTotals();
             ShowYearTotals();
+        }
+
+        private void ShowMonthTotals()
+        {
+            Console.WriteLine("    Monat      |   Einkommen  |    Ausgaben    |   Übrig   ");
+            foreach (Month month in loadedMonths)
+            {
+                Console.WriteLine($"    {month.Date}    |   {month.MoneyIncome}€    |   {month.MoneySpend}€     |   {month.MoneyLeft}€  ");
+            }
         }
 
         private void ShowYearTotals()
         {
-            Console.WriteLine($"Gesamt-Einkommen: {totalIncome}€, Gesamt-Ausgaben: {totalSpend}€, Gesamt-Ersparnis: {totalLeft}€.");
+            Console.WriteLine($"\n    Gesamt     |   {totalIncome}€    |   {totalSpend}€    |   {totalLeft}€    ");
         }
 
-        private void ShowAllMonthTotals()
-        {
-            foreach (Month month in loadedMonths)
-            {
-                Console.WriteLine($"Monat {month.Date}: Einkommen: {month.MoneyIncome}€, Ausgaben: {month.MoneySpend}€, Übrig: {month.MoneyLeft}€.");
-            }
-        }
 
         private void CalculateYearTotals()
         {

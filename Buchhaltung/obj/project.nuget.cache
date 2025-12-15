@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "5jXI9rMpVSlmf6976XNqiLF/L2bZNKyO9Ea1OlWwmPeYs2UojKMZNMtu20c7a12+lNlydY+wGjLOON3l5w4izQ==",
+  "dgSpecHash": "cMtNvyLccFlDBY+wBlqkwf2+7P8bHfEod6EBhB9/0RE2IuyzDfcMrpAuxSOr2EApw9JL+kyP0d0/vRvwbWsYsQ==",
   "success": true,
   "projectFilePath": "/home/ben/cs_workspace/Buchhaltung/Buchhaltung/Buchhaltung.csproj",
   "expectedPackageFiles": [
+    "/home/ben/.nuget/packages/microsoft.net.illink.tasks/8.0.22/microsoft.net.illink.tasks.8.0.22.nupkg.sha512",
     "/home/ben/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "/home/ben/.nuget/packages/microsoft.netcore.targets/1.1.0/microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "/home/ben/.nuget/packages/runtime.any.system.io/4.3.0/runtime.any.system.io.4.3.0.nupkg.sha512",

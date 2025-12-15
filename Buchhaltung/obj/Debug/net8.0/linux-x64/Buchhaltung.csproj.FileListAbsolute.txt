@@ -1,9 +1,3 @@
-/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/Buchhaltung.csproj.AssemblyReference.cache
-/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/Buchhaltung.GeneratedMSBuildEditorConfig.editorconfig
-/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/Buchhaltung.AssemblyInfoInputs.cache
-/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/Buchhaltung.AssemblyInfo.cs
-/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/Buchhaltung.csproj.CoreCompileInputs.cache
-/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/Buchhaltung.sourcelink.json
 /home/ben/cs_workspace/Buchhaltung/Buchhaltung/bin/Debug/net8.0/linux-x64/Buchhaltung
 /home/ben/cs_workspace/Buchhaltung/Buchhaltung/bin/Debug/net8.0/linux-x64/Buchhaltung.deps.json
 /home/ben/cs_workspace/Buchhaltung/Buchhaltung/bin/Debug/net8.0/linux-x64/Buchhaltung.runtimeconfig.json
@@ -192,6 +186,12 @@
 /home/ben/cs_workspace/Buchhaltung/Buchhaltung/bin/Debug/net8.0/linux-x64/libhostpolicy.so
 /home/ben/cs_workspace/Buchhaltung/Buchhaltung/bin/Debug/net8.0/linux-x64/libmscordaccore.so
 /home/ben/cs_workspace/Buchhaltung/Buchhaltung/bin/Debug/net8.0/linux-x64/libmscordbi.so
+/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/Buchhaltung.csproj.AssemblyReference.cache
+/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/Buchhaltung.GeneratedMSBuildEditorConfig.editorconfig
+/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/Buchhaltung.AssemblyInfoInputs.cache
+/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/Buchhaltung.AssemblyInfo.cs
+/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/Buchhaltung.csproj.CoreCompileInputs.cache
+/home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/Buchhaltung.sourcelink.json
 /home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/Buchhaltung.csproj.CopyComplete
 /home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/Buchhaltung.dll
 /home/ben/cs_workspace/Buchhaltung/Buchhaltung/obj/Debug/net8.0/linux-x64/refint/Buchhaltung.dll

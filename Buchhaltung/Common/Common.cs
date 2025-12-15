@@ -15,6 +15,23 @@ namespace Buchhaltung.Common
             WriteIndented = true
         };
 
+        public static string GetFilepathFromMonthDate(string monthDate)
+        {
+            string filepath = CurrDir + monthDate + FileFormat;
+            if (!File.Exists(filepath))
+            {
+                Console.WriteLine($"Error: Kann die Datei in {filepath} nicht finden!");    
+            }
+            return filepath; 
+        }
+
+        public static string GetLastMonthDate()
+        {
+            var lastMonthDT = DateOnly.FromDateTime(DateTime.Today.AddMonths(-1));
+            string lastMonthDate = $"{lastMonthDT.Month}.{lastMonthDT.Year}";
+
+            return lastMonthDate;
+        }
 
         public static List<string> GetFilenamesInDir()
         {

@@ -8,11 +8,12 @@ namespace Buchhaltung.Common
         {
         }
 
-        public static bool AskYesNo()
+        public static bool AskYesNo(string message)
         {
             bool isValid = false;
             while (!isValid)
             {
+                Console.WriteLine(message);
                 string userInput = Console.ReadLine();
                 if (userInput == """J""" || userInput == """j""")
                 {
@@ -25,6 +26,29 @@ namespace Buchhaltung.Common
             }
 
             return false;
+        }
+
+        public static float GetSavingsOrDebts()
+        {
+            float result = 0.0f;
+            bool isMoneyLeft = AskYesNo("Sind Ersparnisse vorhanden?");
+            if (isMoneyLeft == true)
+            {
+                float moneyLeft = GetBetragInput();
+                result = Math.Abs(moneyLeft);
+            }
+
+            bool isInDebt = AskYesNo("Sind Schulden vorhanden?");
+            if (isInDebt == true)
+            {
+                float debt = GetBetragInput();
+                if (debt > 0)
+                {
+                    result = -debt;
+                }
+            }
+
+            return result;
         }
 
         public static List<int> GetNumsInput(string message)
@@ -49,6 +73,18 @@ namespace Buchhaltung.Common
                             Console.WriteLine($"Nummer: {strSplit} wurde nicht korrekt erfasst.");
                         }
                     }
+                }
+                else
+                {
+                    if (!int.TryParse(userInput, out int n))
+                    {
+                        Console.WriteLine($"Error: {userInput} kann nicht in Ganzzahl umgewandelt werden!");
+                    }
+                    else
+                    {
+                        nums.Add(n);
+                    }
+
                 }
             }
             return nums;
@@ -191,13 +227,13 @@ namespace Buchhaltung.Common
             bool isVaild = false;
             while (!isVaild)
             {
-                string datumHeute = DateOnly.FromDateTime(DateTime.Now).ToString().Replace('/', '.');
-                datumHeute = FormatDate(datumHeute);
-                Console.WriteLine($"Datum: {datumHeute} ( Für heutiges Datum 'Enter' drücken ). Exit = 0");
+                DateOnly dateNow = DateOnly.FromDateTime(DateTime.Now);
+                string today = FormatDate($"{dateNow.Day}.{dateNow.Month}.{dateNow.Year}");
+                Console.WriteLine($"Datum: {today} ( Für heutiges Datum 'Enter' drücken ). Exit = 0");
                 string userInput = Console.ReadLine();
                 if (userInput == "")
                 {
-                    return datumHeute;
+                    return today;
                 }
                 if (userInput == "0")
                 {
@@ -245,16 +281,24 @@ namespace Buchhaltung.Common
                 {
                     if (betragValue > 0.0)
                     {
+                        betragValue = (float)Math.Round(betragValue, 2);
+
                         return betragValue;
                     }
                     else
                     {
-                        return Math.Abs(betragValue);
+                        betragValue = Math.Abs((float)Math.Round(betragValue, 2));
+
+                        return betragValue;
                     }
+                }
+                else
+                {
+                    Console.WriteLine($"Error: Fehler bei Eingabe des Betrags {betragInput}!");
                 }
             }
 
-            return -1.0f;
+            return 0.0f;
         }
 
         public static string GetGeschäftInput()

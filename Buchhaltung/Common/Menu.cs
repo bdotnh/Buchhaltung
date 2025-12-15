@@ -48,18 +48,18 @@ namespace Buchhaltung.Common
             "Fixkosten-Einträge löschen"
         ];
 
-        public Menu(int menu)
+        public Menu(int menu, Month month = null, Year year = null) 
         {
             if (menu == (int)EMenu.Month)
             {
                 InitMenuPrompt(menu);
-                MonthMenu();
+                MonthMenu(month);
             }
             else if (menu == (int)EMenu.Year)
             {
 
                 InitMenuPrompt(menu);
-                YearMenu();
+                YearMenu(year);
             }
             else if (menu == (int)EMenu.FixCosts)
             {
@@ -99,9 +99,8 @@ namespace Buchhaltung.Common
             }
         }
 
-        private static void YearMenu()
+        private static Year YearMenu(Year year)
         {
-            Year year = new("");
             string message = "Eingabe: ";
             int menuChoice = User.GetInputNumber(message);
             if (menuChoice == (int)EYearMenu.Exit)
@@ -113,15 +112,17 @@ namespace Buchhaltung.Common
                 if (menuChoice == (int)EYearMenu.ChangeYear)
                 {
                     string newDate = User.GetYearInput("Jahr: ");
-                    new Year(newDate).Show();
+                    year = new Year(newDate);
+                    year.Show();
+                    new Menu((int)EMenu.Year, null, year);
                 }
             }
+
+            return year;
         }
 
-        private static void MonthMenu()
+        private static Month MonthMenu(Month month)
         {
-            Month month = new("");
-            string newDate = "";
             string message = "Eingabe: ";
             int menuChoice = User.GetInputNumber(message);
             if (menuChoice == (int)EMonthMenu.Exit)
@@ -132,17 +133,20 @@ namespace Buchhaltung.Common
             {
                 if (menuChoice == (int)EMonthMenu.ChangeMonth)
                 {
-                    newDate = User.GetMonthInput("Monat: ");
-                    new Month(newDate).Show();
+                    string newDate = User.GetMonthInput("Monat: ");
+                    month = new Month(newDate);
+                    month.Show();
+                    new Menu((int)EMenu.Month, month);
                 }
                 else if (menuChoice == (int)EMonthMenu.DeleteEntries)
                 {
-                    month = new Month(newDate);
                     List<int> entryChoices = User.GetNumsInput("Zum löschen mehrerer Einträge Nummer mit ',' trennen: ");
-                    List<Entry> entries = month.SelectEntries(entryChoices);
+                    List<Entry> entries = month.SelectedEntries(entryChoices);
                     month.DeleteEntries(entries);
                 }
             }
+
+            return month;
         }
 
         private static void FixCostMenu()

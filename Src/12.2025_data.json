@@ -1,23 +1,37 @@
 [
   {
-    "Datum": "12.12.2025",
-    "Betrag": -94.5,
-    "Geschäft": "Amazon",
-    "IstAusgabe": true,
-    "IstFix": false
-  },
-  {
-    "Datum": "12.12.2025",
-    "Betrag": 494.94,
-    "Geschäft": "BA/JC",
+    "Datum": "11.2025",
+    "Betrag": 425.6,
+    "Geschäft": "Erspartes",
     "IstAusgabe": false,
     "IstFix": false
   },
   {
-    "Datum": "12.13.2025",
-    "Betrag": -11.11,
-    "Geschäft": "Test",
+    "Datum": "12.15.2025",
+    "Betrag": -1.11,
+    "Geschäft": "Erster",
     "IstAusgabe": true,
     "IstFix": false
+  },
+  {
+    "Datum": "12.15.2025",
+    "Betrag": -1,
+    "Geschäft": "akds",
+    "IstAusgabe": true,
+    "IstFix": false
+  },
+  {
+    "Datum": "15.12.2025",
+    "Betrag": -69.69697,
+    "Geschäft": "RundungsTest",
+    "IstAusgabe": true,
+    "IstFix": true
+  },
+  {
+    "Datum": "15.12.2025",
+    "Betrag": -1.1234568,
+    "Geschäft": "Test",
+    "IstAusgabe": true,
+    "IstFix": true
   }
 ]

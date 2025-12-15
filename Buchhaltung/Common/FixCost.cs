@@ -123,7 +123,9 @@ namespace Buchhaltung.Common
                     moneyIncome += entries[i].Betrag;
                 }
             }
-            moneyLeft = moneyIncome - moneySpend;
+            moneySpend = (float)Math.Round(moneySpend, 2);
+            moneyIncome = (float)Math.Round(moneyIncome, 2);
+            moneyLeft = (float)Math.Round(moneyIncome - moneySpend, 2);
         }
 
         private static int LoadEntries()

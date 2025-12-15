@@ -19,14 +19,14 @@ namespace Buchhaltung
 
         public static int Test()
         {
-            YearComparison yearComparison = new("2024", "2025");
-            
+            string filepath = Common.Common.GetFilepathFromMonthDate(Common.Common.GetLastMonthDate());
+            Console.WriteLine(filepath);
+
             return 0;
         }
 
         public static int Main()
         {
-
             Init();
             _ = new MainMenu();
 

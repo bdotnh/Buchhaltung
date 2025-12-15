@@ -43,13 +43,16 @@ namespace Buchhaltung.Common
 
         public void DeleteEntries(List<Entry> list)
         {
+            if (list.Count == 0)
+            {
+                Console.WriteLine("Error: Es muss mindestens ein zu löschender Eintrag sein.");   
+            }
             if (list.Count == 0 && entries.Count == 1)
             {
                 entries = new List<Entry>();
             }
             else
             {
-
                 for (int i = 0; i < list.Count; i++)
                 {
                     entries.Remove(list[i]);
@@ -58,7 +61,7 @@ namespace Buchhaltung.Common
             SaveEntries();
         }
 
-        public List<Entry> SelectEntries(List<int> nums)
+        public List<Entry> SelectedEntries(List<int> nums)
         {
             nums.Sort();
             nums.Reverse();
@@ -137,8 +140,10 @@ namespace Buchhaltung.Common
                     moneyIncome += entries[i].Betrag;
                 }
             }
+            moneySpend = (float)Math.Round(moneySpend, 2);
+            moneyIncome = (float)Math.Round(moneyIncome, 2);
             float diff = moneyIncome + moneySpend;
-            moneyLeft = (float)Math.Round(diff, 2); 
+            moneyLeft = (float)Math.Round(diff, 2);
         }
 
         private void LoadEntries()
